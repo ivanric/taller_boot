@@ -72,14 +72,13 @@ public class RestSolicitudes {
 		String placa=req.getParameter("placa");
 		int existe;
 		System.out.println("tam_"+placa.length());
-		
+		//VERIFICA PRIMERO SI EXISTE ALGUNA PLACA QUE ESTE DISPONIBLE 
 		if(this.manejadorSolicitudes.verificarPlaca(placa)){
 			existe=2;
 		}else{
+			//SI LA PLACA ESTA EN USO SE VERIFICA EN QUE  ESTADO ESTA PLACA
 			existe=this.manejadorSolicitudes.EstadoPlaca(placa);			
 		}
-		
-
 		System.out.println("existe: "+existe);
 		mapa.put("estado", existe);
 		return new ResponseEntity<Map<String,Object>>(mapa,HttpStatus.OK);
@@ -109,10 +108,6 @@ public class RestSolicitudes {
 		}
 		try {
 			Object[] RespSolicitud=this.manejadorSolicitudes.registrar(req,xuser,v,s,combustible);
-//			System.out.println("Mapa: "+RespSolicitud.toString());
-//			System.out.println("RespG01: "+RespSolicitud[0]);
-//			System.out.println("ID: "+RespSolicitud[1]);
-//			System.out.println("IDTO: "+RespSolicitud[1].toString());
 			respuesta.put("estado", RespSolicitud[0]);
 			respuesta.put("idsolt", Integer.parseInt(RespSolicitud[1].toString()));
 		} catch (Exception e) {
@@ -143,6 +138,55 @@ public class RestSolicitudes {
 		return respuesta;
 	}
 	
+	
+
+	@RequestMapping(value="FiltroSolicitudOS")
+	public ResponseEntity<List<Solicitud>> FiltroSolicitud(HttpServletRequest req,HttpServletResponse res){
+		HttpSession sesion=req.getSession(true);
+		Persona xuser=(Persona) sesion.getAttribute("xusuario");
+		String texto=req.getParameter("texto");
+		System.out.println("texto: "+texto);
+		 
+		List<Solicitud> solt=null;
+		try {
+			solt=this.manejadorSolicitudes.FiltroSolicitudOS(req.getParameter("texto"));
+			System.out.println("TAM: "+solt.size());
+			System.out.println("KU: "+solt);
+		} catch (Exception e) {
+			solt=null;
+		}
+		return new ResponseEntity<List<Solicitud>>(solt,HttpStatus.OK);
+	}
+	@RequestMapping(value="Ver")
+//	public ResponseEntity<List<List<?>>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
+		public ResponseEntity<List<?>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
+		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
+//		List<List<?>> lista=new ArrayList<List<?>>();
+		List<Object> lista=new ArrayList<>();
+		String ListaTelefonos="",Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
+		String idsolt=req.getParameter("idsolt");
+		System.out.println("idsolt: "+idsolt);
+		  
+		List<Telefono> ListaTelf=this.manejadorSolicitudes.ListaTelf(Integer.parseInt(idsolt));
+		Solicitud solt=this.manejadorSolicitudes.verSolicitud(Integer.parseInt(idsolt));
+		System.out.println("ListaTelefonos: "+ListaTelf.toString());
+		
+		for (int i = 0; i < ListaTelf.size(); i++) {
+			System.out.println("ListaTelS: "+ListaTelf.get(i));
+			ListaTelefonos+=ListaTelf.get(i).getNumero()+" ";
+		}
+		ListaTelefonos=ListaTelefonos.trim().replaceAll(" ","-");
+		System.out.println("ListaTelefonos: "+ListaTelefonos);
+		Map<String, Object> mapa1=new HashMap<>();
+		mapa1.put("listaTelefonos", ListaTelefonos);
+		List<Documento> listaDoc=this.manejadorBeneficiarios.listaDocumentos();
+		List<CombustibleVehiculo> listaComb=this.manejadorSolicitudes.listaCombustible();
+		lista.add(solt);
+		lista.add(mapa1);
+		lista.add(listaDoc);
+		lista.add(listaComb);
+		return new ResponseEntity<List<?>>(lista,HttpStatus.OK);
+	}
 	@Autowired
 	DataSource dataSource;
 	@RequestMapping("Imprimir")
@@ -197,80 +241,4 @@ public class RestSolicitudes {
 		}		
 	}
 	
-	@RequestMapping("verdemo1")
-	public  void verdemo1(HttpServletResponse res,HttpServletRequest req){
-		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
-		
-		String idsolt=req.getParameter("idsolt");
-		System.out.println("idsolt: "+idsolt);
-		
-		String direccionBol="/Service/reportes/escudobolivia.png";
-		String subReportInst="/Service/reportes/getEmpresa.jasper";
-		    
-		String nombreReporte="Solicitud",tipo="pdf", estado="inline";
-		System.out.println("input_param: "+this.getClass().getResourceAsStream(direccionBol));
-		  
-		Map<String, Object> parametros=new HashMap<String, Object>();
-		  
-		String url="/Service/reportes/getSolicitud.jasper";	
-		
-		parametros.put("idsolt_param",Integer.parseInt(idsolt));
-
-		parametros.put("input_param",this.getClass().getResourceAsStream(direccionBol));
-		parametros.put("subreport_inst_param",this.getClass().getResourceAsStream(subReportInst));
-
-		GeneradorReportes g=new GeneradorReportes();
-		try{
-			g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
-	@RequestMapping(value="FiltroSolicitudOS")
-	public ResponseEntity<List<Solicitud>> FiltroSolicitud(HttpServletRequest req,HttpServletResponse res){
-		HttpSession sesion=req.getSession(true);
-		Persona xuser=(Persona) sesion.getAttribute("xusuario");
-		String texto=req.getParameter("texto");
-		System.out.println("texto: "+texto);
-		 
-		List<Solicitud> solt=null;
-		try {
-			solt=this.manejadorSolicitudes.FiltroSolicitudOS(req.getParameter("texto"));
-			System.out.println("TAM: "+solt.size());
-			System.out.println("KU: "+solt);
-		} catch (Exception e) {
-			solt=null;
-		}
-		return new ResponseEntity<List<Solicitud>>(solt,HttpStatus.OK);
-	}
-	@RequestMapping(value="Ver")
-//	public ResponseEntity<List<List<?>>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
-		public ResponseEntity<List<?>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
-		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
-//		List<List<?>> lista=new ArrayList<List<?>>();
-		List<Object> lista=new ArrayList<>();
-		String ListaTelefonos="",Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
-		String idsolt=req.getParameter("idsolt");
-		System.out.println("idsolt: "+idsolt);
-		  
-		List<Telefono> ListaTelf=this.manejadorSolicitudes.ListaTelf(Integer.parseInt(idsolt));
-		Solicitud solt=this.manejadorSolicitudes.verSolicitud(Integer.parseInt(idsolt));
-		System.out.println("ListaTelefonos: "+ListaTelf.toString());
-		
-		for (int i = 0; i < ListaTelf.size(); i++) {
-			System.out.println("ListaTelS: "+ListaTelf.get(i));
-			ListaTelefonos+=ListaTelf.get(i).getNumero()+" ";
-		}
-		ListaTelefonos=ListaTelefonos.trim().replaceAll(" ","-");
-		System.out.println("ListaTelefonos: "+ListaTelefonos);
-		Map<String, Object> mapa1=new HashMap<>();
-		mapa1.put("listaTelefonos", ListaTelefonos);
-		List<Documento> listaDoc=this.manejadorBeneficiarios.listaDocumentos();
-		List<CombustibleVehiculo> listaComb=this.manejadorSolicitudes.listaCombustible();
-		lista.add(solt);
-		lista.add(mapa1);
-		lista.add(listaDoc);
-		lista.add(listaComb);
-		return new ResponseEntity<List<?>>(lista,HttpStatus.OK);
-	}
 }

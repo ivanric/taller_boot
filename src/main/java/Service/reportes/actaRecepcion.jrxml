@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.0.0  -->
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaRecepcion" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0db58696-8310-43ba-9985-a8a72a6e2428">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conect"/>
@@ -8,7 +8,9 @@
 	</parameter>
 	<parameter name="escudo_param" class="java.io.InputStream"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT ar.*,tall.nombretall,per.nombres,per.ap,per.am,p.nombres as nombreBen,p.ap as apBen,p.am as amBen,p.ci as ciBen,os.numords,cil.capacidad,veh.placa,serv.precioBolivianos,serv.precioDolares FROM actaRecepcion ar JOIN ordenServicio os ON os.idordserv=ar.idordserv JOIN taller tall ON tall.idtall=os.idtall JOIN persona per ON per.idper=tall.idper JOIN  solicitud sol ON sol.idsolt=os.idsolt JOIN vehiculo veh ON sol.placa=veh.placa JOIN beneficiario ben ON ben.idben=sol.idben JOIN persona p ON p.idper=ben.idper JOIN servicio serv ON os.idserv=serv.idserv JOIN reductor red on red.idreduc=serv.idreduc JOIN cilindro cil ON cil.idcil=serv.idcil WHERE ar.idrecep=$P{idRecep_param}]]>
+		<![CDATA[SELECT ar.*,tall.nombretall,per.nombres,per.ap,per.am,p.nombres as nombreBen,p.ap as apBen,p.am as amBen,p.ci as ciBen,os.numords,cil.capacidad,veh.placa,serv.precioBolivianos,serv.precioDolares 
+FROM actaRecepcion ar JOIN ordenServicio os ON os.idordserv=ar.idordserv JOIN taller tall ON tall.idtall=os.idtall JOIN persona per ON per.idper=tall.idper JOIN  solicitud sol ON sol.idsolt=os.idsolt JOIN benVehSolt bvs ON bvs.idsolt=sol.idsolt JOIN vehiculo veh ON bvs.placa=veh.placa JOIN beneficiario ben ON ben.idben=bvs.idben AND ben.estado=1 JOIN persona p ON p.idper=ben.idper JOIN servicio serv ON os.idserv=serv.idserv JOIN reductor red on red.idreduc=serv.idreduc JOIN cilindro cil ON cil.idcil=serv.idcil 
+WHERE ar.idrecep=$P{idRecep_param}]]>
 	</queryString>
 	<field name="idrecep" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="idrecep"/>
@@ -16,7 +18,7 @@
 	<field name="numrecep" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="numrecep"/>
 	</field>
-	<field name="fecha" class="java.lang.String">
+	<field name="fecha" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
 	</field>
 	<field name="almacenesSiNo" class="java.lang.Integer">

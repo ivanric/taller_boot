@@ -162,10 +162,10 @@
                     $('td',row).eq(5).html(data.solicitud.vehiculo.placa).addClass('text-center')
                 	
                     if (data.solicitud.estado==1) {
-                      $('td',row).eq(6).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center')
+                      $('td',row).eq(6).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down "></i></button>').addClass('text-center')
 
                     } else {
-                        $('td',row).eq(6).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></button>').addClass('text-center')
+                        $('td',row).eq(6).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center')
                     }
                     if (data.instaladoSiNo==0) {
 						$('td',row).eq(7).html('<input type="checkbox" class=""  disabled="disabled">').addClass('text-center');

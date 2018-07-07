@@ -264,14 +264,10 @@
                                     callback:{
                                         message:'callback placa',
                                         callback:function(value,validator,$field){
-                                            // console.log('el valor de la placa:',value)
-                                            // console.log(validator)
-                                            // console.log($field)
                                             $("#div-mod-veh").html("").hide();
                                             var padreNode=$('.dt-veh').parent(); 
                                             if(value=='' || value.indexOf(' ') != -1){
-                                                // alert('vacio')
-                                                // value.replace(/\s/gi,'');                                                
+                                                                                             
                                                 $('#mensaje-placa').hide()
                                                 $('.dt-veh').removeAttr('disabled')
                                                 return{
@@ -290,6 +286,7 @@
                                                 async:false,
                                                 cache:false,
                                                 success:function(resp){
+                                                    console.log('existePlaca: ',resp) 
                                                     respPlaca=resp.estado
                                                 },  
                                                 error:function(err){
@@ -299,7 +296,6 @@
                                             })
                                             if(respPlaca==1){
                                                 $('#mensaje-placa').hide();
-                                                //$('.dt-veh').removeAttr('disabled')
                                                 $('.dt-veh').attr('disabled','disabled')
 												$('.dt-veh').val('').trigger('chosen:updated');	
                                                 return {
@@ -307,7 +303,6 @@
                                                     message:'esta placa esta en tramite'
                                                 } 
                                             }else if(respPlaca==2){
-                                            //$('#formulario-add').data('formValidation').resetForm(true);
                                             	$('#mensaje-placa').html('se encontro placa registrada').show()
                                                 var vehiculo;
                                                 $.post('../RestSolicitudes/PlacaDatos',{placa:value},function(resp){
@@ -325,7 +320,6 @@
                                                 		arrayChosen.push(item.idcomb);
                                                 	})
                                                 	console.log('array: ',arrayChosen);
-                                                    //$('#select-comb').chosen('destroy');
                                                 	$('#select-comb').val(arrayChosen);
                                                 	$('#select-comb').trigger('chosen:updated');
                                                 	
@@ -333,7 +327,6 @@
                                                 })
                                                 $('.dt-veh').attr('disabled','disabled')
 												$('.dt-veh').val('').trigger('chosen:updated');			
-                                                //$('.dt-veh').val(    rec_ben.genero).trigger('chosen:updated');	
 												
 												$("#div-mod-veh").html(`
 													<a class="btn btn-xs bgm-purple href="#"   waves-effect" id="btn_modVehS" disabled="disabled">
@@ -480,7 +473,7 @@
                                                         }); 
                                                         var idsolt=res.idsolt
                                                         console.log('idsolt: ',idsolt)
-                                                        $("#frameReportes").attr("src",'../RestSolicitudes/ver?idsolt='+idsolt);
+                                                        $("#frameReportes").attr("src",'../RestSolicitudes/Imprimir?idsolt='+idsolt);
 
                                                         $("#reportes").modal('show');
     

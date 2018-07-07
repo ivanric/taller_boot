@@ -553,7 +553,7 @@ public class ManejadorServicios {
 		return this.db.queryForObject(sql,new objOrdenServicio(),id);
 	}
 	public List<OrdenServicio> FiltroOrdenServicioAR(String cadena){
-		String sql="SELECT os.* FROM ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p WHERE os.idsolt=s.idsolt AND os.instaladoSiNo=1 AND s.idben=b.idben AND s.placa=veh.placa and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) and os.idordserv NOT IN (SELECT ar.idordserv  FROM actaRecepcion ar WHERE ar.idordserv=os.idordserv)";
+		String sql="SELECT os.* FROM ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p, benVehSolt bvs WHERE os.idsolt=s.idsolt AND os.instaladoSiNo=1 AND bvs.idben=b.idben AND b.estado=1 AND bvs.placa=veh.placa AND bvs.idsolt=s.idsolt and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) and os.idordserv NOT IN (SELECT ar.idordserv  FROM actaRecepcion ar WHERE ar.idordserv=os.idordserv)";
 		return this.db.query(sql, new objOrdenServicio(),'%'+cadena+'%','%'+cadena+'%','%'+cadena+'%');
 	}
 	/*Instalacion KIT*/
@@ -562,7 +562,7 @@ public class ManejadorServicios {
 		return this.db.queryForObject(sql,new objOrdenServicio(),id);
 	}
 	public List<OrdenServicio> FiltroOrdenServicioIK(String cadena){
-		String sql="SELECT os.* FROM ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p WHERE os.idsolt=s.idsolt AND os.instaladoSiNo=0 AND s.idben=b.idben AND s.placa=veh.placa and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) and os.idordserv NOT IN (SELECT r.idordserv  FROM registroKit r WHERE r.idordserv=os.idordserv)";
+		String sql="SELECT os.* FROM ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p,benVehSolt bvs WHERE os.idsolt=s.idsolt AND os.instaladoSiNo=0 AND bvs.idben=b.idben AND b.estado=1 AND bvs.placa=veh.placa AND bvs.idsolt=s.idsolt and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) and os.idordserv NOT IN (SELECT r.idordserv  FROM registroKit r WHERE r.idordserv=os.idordserv)";
 		return this.db.query(sql, new objOrdenServicio(),'%'+cadena+'%','%'+cadena+'%','%'+cadena+'%');
 	}
 	

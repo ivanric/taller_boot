@@ -271,10 +271,9 @@ private JdbcTemplate db;
 		String busq=req.getParameter("texto");
 		System.out.println("llego: "+busq=="");
 		System.out.println("data: "+busq);
-		String sql="select p.* from beneficiario b, persona p where b.idper=p.idper and (concat(p.nombres,' ',p.ap,' ',p.am)LIKE ? or p.ci LIKE ?)";
+		String sql="select p.* from beneficiario b, persona p where b.idper=p.idper AND b.estado=1 and (concat(p.nombres,' ',p.ap,' ',p.am)LIKE ? or p.ci LIKE ?)";
 		return this.db.query(sql,new objPersona(),"%"+busq+"%","%"+busq+"%");
 	}
-	  
 	//TRANSFERENCIA BENEFICIARIO 
 	public List<Documento> listaDocumentosTB(){
 		String sql="SELECT * FROM docBeneficiario WHERE estado=1  ORDER BY iddocb ASC";

@@ -69,7 +69,7 @@ public class ManejadorActaRecepcion {
 	public List<ActaRecepcion> Lista(HttpServletRequest req){
 		String filtro=req.getParameter("filtro");
 		//int estado=Integer.parseInt(req.getParameter("estado"));
-		String sql="select ar.* from actaRecepcion ar join ordenServicio os on ar.idordserv=os.idordserv JOIN solicitud s ON s.idsolt=os.idsolt JOIN beneficiario b ON b.idben=s.idben JOIN persona per ON per.idper=b.idper where (concat(per.ap,' ',per.am,' ',per.nombres) LIKE ?) ORDER BY ar.idrecep ASC";
+		String sql="select ar.* from actaRecepcion ar join ordenServicio os on ar.idordserv=os.idordserv JOIN solicitud s ON s.idsolt=os.idsolt  JOIN benVehSolt bvs ON bvs.idsolt=s.idsolt JOIN beneficiario b ON b.idben=bvs.idben AND b.estado=1 JOIN persona per ON per.idper=b.idper where (concat(per.ap,' ',per.am,' ',per.nombres) LIKE ?) ORDER BY ar.idrecep ASC";
 		return this.db.query(sql, new objActaRecepcion(),"%"+filtro+"%");
 	}
 	public Object[] registrar(HttpServletRequest req,Persona xuser) {
@@ -149,7 +149,7 @@ public class ManejadorActaRecepcion {
 		return this.db.query(sql, new objOrdenPago(),"%"+filtro+"%","%"+filtro+"%","%"+filtro+"%");
 	}
 	public List<ActaRecepcion> FiltroActaRecepcionOP(String cadena){
-		String sql="SELECT ar.* FROM actaRecepcion ar,ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p WHERE ar.idordserv=os.idordserv AND os.idsolt=s.idsolt AND os.instaladoSiNo=1 AND s.idben=b.idben AND s.placa=veh.placa and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) ";
+		String sql="SELECT ar.* FROM actaRecepcion ar,ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p,benVehSolt bvs WHERE ar.idordserv=os.idordserv AND os.idsolt=s.idsolt AND os.instaladoSiNo=1 AND bvs.idben=b.idben AND b.estado=1 AND bvs.placa=veh.placa AND bvs.idsolt=s.idsolt and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) ";
 		return this.db.query(sql, new objActaRecepcion(),'%'+cadena+'%','%'+cadena+'%','%'+cadena+'%');
 	}
 	public int getIdRegistroKit(int id){

@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <title></title>
     <link rel="stylesheet" href="../css/buscador.css">
-    <style>
+    <style> 
         .selected{
             background-color: #B0BED9;
         }
@@ -527,17 +527,15 @@
                     $('input[name="SistemaMotor"]').val(objetoFiltro.vehiculo.tipoMotor.nombre)
 
                     $(listaComb).each(function(i,tg){
-                        // $('#js-comb').append(`
-                        //     <div class="col-md-6" style="margin-top: 4px;">
-                        //         <div class="fg-line">${tg.nombre}</div>
-                        //     </div>
-                        // `)
-                        var checked1="";
+                        var checked1="",checked2="";
                         $(objetoFiltro.vehiculo.combustibleVehiculo).each(function(j,item){
                             if (tg.idcomb==item.idcomb) {
                                 checked1="checked";
                             }
                         })
+                        if(checked1==""){
+                            checked2="checked"
+                        }
                         $('#js-comb').append(`
                             <div class="col-md-6" style="margin-top: 4px;">
                                 <div class="fg-line">${tg.nombre}</div>
@@ -547,7 +545,7 @@
                                 <input type="checkbox" disabled="disabled" class="" ${checked1}>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span style="">NO</span> 
-                                <input type="checkbox" disabled="disabled" class="">
+                                <input type="checkbox" disabled="disabled" class="" ${checked2}>
                             </div>
                         `)
                     })

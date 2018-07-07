@@ -395,16 +395,13 @@ private JdbcTemplate db;
 		System.out.println("entro sql_placa:"+placa);
 		String sql="";
 		try {
-			sql="SELECT COUNT(v.placa) FROM solicitud s, vehiculo v WHERE v.placa=s.placa and v.placa=? and v.estado=1";
-//			sql="SELECT v.placa FROM solicitud s, vehiculo v WHERE v.placa=s.placa and v.placa=? and v.estado=0";
-//			Map<String, Object>data=this.db.queryForMap(sql,new Object[]{placa});
+			//sql="SELECT COUNT(v.placa) FROM solicitud s, vehiculo v WHERE v.placa=s.placa and v.placa=? and v.estado=1";
+			sql="SELECT COUNT(v.placa)FROM beneficiario b,vehiculo v,benVehSolt bvs WHERE b.idben=bvs.idben AND b.estado=1 AND v.placa=bvs.placa AND  v.placa=? and v.estado=1";
 			int data=this.db.queryForObject(sql,Integer.class,placa);
 			System.out.println("existe????:"+data);
 			if(data!=0){
-//				System.out.println("entro if_placa: "+data);
 				return 1;	
 			}else{
-//				System.out.println("entro else_placa: "+data);
 				return 0;
 			}
 		} catch (Exception e) {

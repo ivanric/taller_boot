@@ -58,8 +58,6 @@ public class RestInstalacionKit {
 		Map<String, Object> mapa=new HashMap<>();
 		Date date = new Date();
 		String fecha= new SimpleDateFormat("yyyy-MM-dd").format(date);
-//		mapa.put("numRecep", this.manejadorActaRecepcion.numeroRecep());
-		
 		mapa.put("fecha",fecha);
 		
 		List<Cilindro> listaCil=this.manejadorServicios.ListaCilindros();

@@ -303,7 +303,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 				<text><![CDATA[Nombre del Taller]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="500" y="46" width="70" height="15" forecolor="#000000" uuid="a9d6628a-3c2d-4f2d-b519-4a51dd7fc098">
+				<reportElement positionType="FixRelativeToBottom" x="410" y="46" width="160" height="15" forecolor="#000000" uuid="a9d6628a-3c2d-4f2d-b519-4a51dd7fc098">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -318,7 +318,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 				<textFieldExpression><![CDATA[$F{nombretall}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="61" width="180" height="13" uuid="9b3eb954-58cb-4d4b-9aa7-461c1b75b6a5">
+				<reportElement x="410" y="61" width="160" height="13" uuid="9b3eb954-58cb-4d4b-9aa7-461c1b75b6a5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right"/>
@@ -440,7 +440,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 				<text><![CDATA[Tipo de Documento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="390" y="80" width="180" height="15" forecolor="#000000" uuid="1cb07aaa-d48b-4282-84f0-91c3011b34dc">
+				<reportElement positionType="FixRelativeToBottom" x="410" y="80" width="160" height="15" forecolor="#000000" uuid="1cb07aaa-d48b-4282-84f0-91c3011b34dc">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -700,11 +700,11 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 				<text><![CDATA[Marca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="480" y="20" width="90" height="15" forecolor="#000000" uuid="15621c70-8348-414f-9f56-35e69242f4d8">
+				<reportElement positionType="FixRelativeToBottom" x="440" y="20" width="130" height="15" forecolor="#000000" uuid="15621c70-8348-414f-9f56-35e69242f4d8">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Modelo]]></text>
@@ -725,7 +725,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Targeta de Propiedad]]></text>
@@ -746,7 +746,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistema Motor]]></text>
@@ -773,7 +773,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Número de Pistones]]></text>
@@ -897,7 +897,7 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 				<text><![CDATA[Combustible]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="205" width="100" height="15" uuid="ac00d0a8-049f-4a94-afed-0af3b564c813">
+				<reportElement x="0" y="205" width="30" height="15" uuid="ac00d0a8-049f-4a94-afed-0af3b564c813">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9d1f3253-e37f-4a33-b976-ed44b038713e"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -1023,6 +1023,10 @@ WHERE ors.idordserv=$P{idOrdServ_param}]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="31" y="205" width="19" height="15" uuid="f1066164-3655-40f5-a8ca-912b9fce1784"/>
+				<text><![CDATA[M3]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>

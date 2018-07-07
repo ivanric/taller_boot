@@ -154,10 +154,10 @@
 	                    $('td',row).eq(3).html(data.persona.ap+' '+data.persona.am+' '+data.persona.nombres)
 	                    $('td',row).eq(4).html(data.persona.ci)
 	                    if(data.estado==1){
-	                        $('td',row).eq(5).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center').addClass('text-center');
+                            $('td',row).eq(5).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></button>').addClass('text-center').addClass('text-center');
 	                    }else{
-	                        $('td',row).eq(5).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></button>').addClass('text-center').addClass('text-center');
-	                    }
+                            $('td',row).eq(5).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center').addClass('text-center');
+                        }
 						if (data.aprobadoSiNo==0) {
 							$('td',row).eq(6).html('<input type="checkbox" class=""  disabled="disabled">').addClass('text-center');
 						} else {
