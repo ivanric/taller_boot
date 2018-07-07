@@ -1,0 +1,3 @@
+gradle build --refresh-dependencies
+gradle build
+gradle bootRun

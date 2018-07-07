@@ -1,0 +1,16 @@
+{
+  "name": "material-design-icons-font",
+  "description": "Font for Material Design icons by Google",
+  "main": "iconfont/material-icons.css",
+  "authors": [
+    "Material Design Authors"
+  ],
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "icons",
+    "material",
+    "material-design",
+    "google"
+  ],
+  "homepage": "https://github.com/mtusk/material-design-icons"
+}
