@@ -74,7 +74,8 @@ selectt{
 }
 .pie_pag {
     background: #000000;
-    background: radial-gradient(ellipse at center, rgba(48, 80, 88, 0.55) 0%, rgba(26, 3, 103, 0.73) 70%);
+	/*background: radial-gradient(ellipse at center, rgba(48, 80, 88, 0.55) 0%, rgba(26, 3, 103, 0.73) 70%); */
+    background:#000f51;
     background-size: 100%;
     bottom: 0;
     /* border-radius: 12px; */

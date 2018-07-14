@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import Service.manager.ManejadorBeneficiarios.objTelefono;
 import Service.manager.ManejadorSolicitudes.objSolicitud;
 import Service.models.Aprobacion;
 import Service.models.Beneficiario;
@@ -133,6 +134,11 @@ private JdbcTemplate db;
 				p.setBeneficiario(metBeneficiario(rs.getInt("idper")));
 			}catch (Exception e){
 				p.setBeneficiario(null);
+			}
+			try {
+				p.setListaTelf(metListaTelefonos(rs.getInt("idper")));
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			return p;
 	    }
@@ -273,6 +279,10 @@ private JdbcTemplate db;
 	}
 	public Beneficiario metBeneficiario(int idper){
 		return this.db.queryForObject("select * from beneficiario where idper=?", new objBeneficiario(),idper);
+	}
+	public List<Telefono> metListaTelefonos(int idper){
+		String sql="select * from telefono where idper=?";
+		return this.db.query(sql,new objTelefono(),idper);
 	}
 	public List<Documento> getDocumentos(int idben){
 		return this.db.query("SELECT d.* FROM docBeneficiario d,beneficiario b,bendoc bd WHERE d.iddocb=bd.iddocb and b.idben=bd.idben and b.idben=?", new objDocumento(),idben);
@@ -562,7 +572,7 @@ private JdbcTemplate db;
 	
 	
 	public List<Telefono> ListaTelf(int idsolt){
-		String sql="SELECT t.* FROM telefono t,persona p,beneficiario b,solicitud s WHERE t.idper=p.idper and p.idper=b.idper AND b.idben=s.idben AND s.idsolt=?";
+		String sql="SELECT t.* FROM telefono t,persona p,beneficiario b,solicitud s,benVehSolt bvs WHERE t.idper=p.idper and p.idper=b.idper AND b.idben=bvs.idben AND b.estado=1 AND s.idsolt=bvs.idsolt AND s.idsolt=?";
 		return this.db.query(sql,new objTelefono(),idsolt);
 	}
 	public Solicitud verSolicitud(int idsolt) {

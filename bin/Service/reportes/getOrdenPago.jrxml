@@ -8,7 +8,8 @@
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conect"/>
 		<parameter name="idRegistroKit_param" class="java.lang.Integer"/>
 		<queryString language="SQL">
-			<![CDATA[SELECT  ROW_NUMBER() OVER(ORDER BY ic.idcil ASC) AS incremento,ic.serie,cil.capacidad,mc.nombre as marcaCil FROM instalacionCilindro ic,marcaCilindro mc,registroKit rk,cilindro cil WHERE ic.idregistroKit=rk.idregistroKit AND ic.idcil=cil.idcil AND cil.idmarccil=mc.idmarccil AND rk.idregistroKit=$P{idRegistroKit_param}]]>
+			<![CDATA[SELECT  ROW_NUMBER() OVER(ORDER BY ic.idcil ASC) AS incremento,ic.serie,cil.capacidad,mc.nombre as marcaCil FROM instalacionCilindro ic,marcaCilindro mc,registroKit rk,cilindro cil
+WHERE ic.idregistroKit=rk.idregistroKit AND ic.idcil=cil.idcil AND cil.idmarccil=mc.idmarccil AND rk.idregistroKit=$P{idRegistroKit_param}]]>
 		</queryString>
 		<field name="incremento" class="java.lang.Long">
 			<property name="com.jaspersoft.studio.field.label" value="incremento"/>

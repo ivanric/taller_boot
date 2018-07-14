@@ -13029,7 +13029,7 @@ input:focus {
 .form-control:not(.fc-alt) {
   box-shadow: none;
   border: 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #5e6171;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

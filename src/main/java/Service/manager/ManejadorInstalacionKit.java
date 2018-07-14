@@ -16,15 +16,18 @@ import Service.manager.ManejadorActaRecepcion.objActaRecepcion;
 import Service.manager.ManejadorServicios.objCilindro;
 import Service.manager.ManejadorServicios.objMarcaCilindro;
 import Service.manager.ManejadorServicios.objMarcaReductor;
+import Service.manager.ManejadorServicios.objOrdenServicio;
 import Service.manager.ManejadorServicios.objReductor;
 import Service.models.ActaRecepcion;
 import Service.models.Cilindro;
 import Service.models.InstalacionCilindro;
 import Service.models.MarcaCilindro;
 import Service.models.MarcaReductor;
+import Service.models.OrdenServicio;
 import Service.models.Persona;
 import Service.models.Reductor;
 import Service.models.RegistroKit;
+import Service.models.TransferenciaBeneficiario;
 @Service
 public class ManejadorInstalacionKit {
 	private JdbcTemplate db;
@@ -226,4 +229,15 @@ public class ManejadorInstalacionKit {
 		String sql="SELECT rk.* FROM registroKit rk JOIN ordenServicio os ON os.idordserv=rk.idordserv JOIN solicitud s ON s.idsolt=os.idsolt JOIN trasladoBeneficiario tb ON tb.idsolt=s.idsolt WHERE tb.idsolt=?";
 		return this.db.queryForObject(sql,new objRegistroKit(),id);
 	}
+	public List<RegistroKit> FiltroRegistroKitTB(String cadena){
+		String sql="SELECT rk.* FROM registroKit rk,ordenServicio os,solicitud s,vehiculo veh,beneficiario b,persona p, benVehSolt bvs \r\n" + 
+				"WHERE rk.idordserv=os.idordserv AND os.idsolt=s.idsolt AND os.instaladoSiNo=1 AND bvs.idben=b.idben AND b.estado=1 AND bvs.placa=veh.placa AND bvs.idsolt=s.idsolt and b.idper=p.idper and (os.numords LIKE ? or s.numSolt LIKE ? or p.ci LIKE ?) ";
+		return this.db.query(sql, new objRegistroKit(),'%'+cadena+'%','%'+cadena+'%','%'+cadena+'%');
+	}
+	public RegistroKit getRegistroKitTBbyIdTrasl(int id) {
+		String sql="select rk.* from registroKit rk,trasladoBeneficiario tb,solicitud s,ordenServicio os\r\n" + 
+				"WHERE tb.idsolt=s.idsolt AND s.idsolt=os.idsolt  AND rk.idordserv=os.idordserv AND tb.idtrasl=?";
+		return this.db.queryForObject(sql,new objRegistroKit(),id);
+	}
+
 }

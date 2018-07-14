@@ -78,7 +78,6 @@ public class RestActaRecepcion {
 		try {
 			System.out.println("entro try");
 			ListOrdenServicio=this.manejadorServicios.FiltroOrdenServicioAR(req.getParameter("texto"));
-//			ListOrdenServicio=this.manejadorServicios.FiltroOrdenServicioAR(texto);
 			System.out.println("Lista: "+ListOrdenServicio.toString());
 			for (int i = 0; i < ListOrdenServicio.size(); i++) {
 				ListOrdenServicio.get(i).setSolicitud(this.manejadorSolicitudes.getSoltByOrdServ(ListOrdenServicio.get(i).getIdordserv()));		

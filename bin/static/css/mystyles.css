@@ -47,6 +47,10 @@ body{
 .desc:hover {
 	color: #fff;
 }
+.fg-line .form-control:disabled {
+    color: #000000 !important;
+    background: transparent;
+}
 header{
 	width: 100%;
 	background:#000f51;

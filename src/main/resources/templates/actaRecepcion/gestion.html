@@ -147,7 +147,6 @@
                     $('td',row).eq(4).html(data.ordenServicio.solicitud.vehiculo.placa)
                     $('td',row).eq(5).html(data.ordenServicio.taller.nombretall);
                     if(ExisteOpcion('ver')  ){
-                        // if()
                         $('td',row).eq(6).html('<button id="btn-ver" class="btn bgm-cyan waves-effect btn-sm btn-espacio" accesskey="'+data.idrecep+'" data-href="'+data.idrecep+'" onclick="(Gestionar.ver(this))"><span class="zmdi zmdi-print"></span> Ver Acta Recepción</button>');
                     }else{
                         $('td',row).eq(6).html('<button id="btn-ver" class="btn bgm-cyan waves-effect btn-sm  btn-espacio" disabled="disabled"><span class="zmdi zmdi-print"></span>Ver Acta Recepción</button>');  

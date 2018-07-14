@@ -1,23 +1,25 @@
 package Service.models;
 
 public class TransferenciaBeneficiario {
-	protected Integer idtrasl,idsolt,idben;
+	protected Integer idtrasl,idsolt,idbenActual,idbenNuevo;
 	protected String fechaTraslado,motivoTraslado,login;
-	protected Persona personaNBenf;
+	protected Persona personaAnteriorBenf;
 	protected RegistroKit registroKit;
 	public TransferenciaBeneficiario() {
 
 	}
-	public TransferenciaBeneficiario(Integer idtrasl, Integer idsolt, Integer idben, String fechaTraslado,
-			String motivoTraslado, String login, Persona personaNBenf, RegistroKit registroKit) {
+	public TransferenciaBeneficiario(Integer idtrasl, Integer idsolt, Integer idbenActual, Integer idbenNuevo,
+			String fechaTraslado, String motivoTraslado, String login, Persona personaAnteriorBenf,
+			RegistroKit registroKit) {
 		super();
 		this.idtrasl = idtrasl;
 		this.idsolt = idsolt;
-		this.idben = idben;
+		this.idbenActual = idbenActual;
+		this.idbenNuevo = idbenNuevo;
 		this.fechaTraslado = fechaTraslado;
 		this.motivoTraslado = motivoTraslado;
 		this.login = login;
-		this.personaNBenf = personaNBenf;
+		this.personaAnteriorBenf = personaAnteriorBenf;
 		this.registroKit = registroKit;
 	}
 	public Integer getIdtrasl() {
@@ -32,11 +34,17 @@ public class TransferenciaBeneficiario {
 	public void setIdsolt(Integer idsolt) {
 		this.idsolt = idsolt;
 	}
-	public Integer getIdben() {
-		return idben;
+	public Integer getIdbenActual() {
+		return idbenActual;
 	}
-	public void setIdben(Integer idben) {
-		this.idben = idben;
+	public void setIdbenActual(Integer idbenActual) {
+		this.idbenActual = idbenActual;
+	}
+	public Integer getIdbenNuevo() {
+		return idbenNuevo;
+	}
+	public void setIdbenNuevo(Integer idbenNuevo) {
+		this.idbenNuevo = idbenNuevo;
 	}
 	public String getFechaTraslado() {
 		return fechaTraslado;
@@ -56,11 +64,11 @@ public class TransferenciaBeneficiario {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	public Persona getPersonaNBenf() {
-		return personaNBenf;
+	public Persona getPersonaAnteriorBenf() {
+		return personaAnteriorBenf;
 	}
-	public void setPersonaNBenf(Persona personaNBenf) {
-		this.personaNBenf = personaNBenf;
+	public void setPersonaAnteriorBenf(Persona personaAnteriorBenf) {
+		this.personaAnteriorBenf = personaAnteriorBenf;
 	}
 	public RegistroKit getRegistroKit() {
 		return registroKit;
@@ -70,9 +78,11 @@ public class TransferenciaBeneficiario {
 	}
 	@Override
 	public String toString() {
-		return "TransferenciaBeneficiario [idtrasl=" + idtrasl + ", idsolt=" + idsolt + ", idben=" + idben
-				+ ", fechaTraslado=" + fechaTraslado + ", motivoTraslado=" + motivoTraslado + ", login=" + login
-				+ ", personaNBenf=" + personaNBenf + ", registroKit=" + registroKit + "]";
+		return "TransferenciaBeneficiario [idtrasl=" + idtrasl + ", idsolt=" + idsolt + ", idbenActual=" + idbenActual
+				+ ", idbenNuevo=" + idbenNuevo + ", fechaTraslado=" + fechaTraslado + ", motivoTraslado="
+				+ motivoTraslado + ", login=" + login + ", personaAnteriorBenf=" + personaAnteriorBenf
+				+ ", registroKit=" + registroKit + "]";
 	}
+	
 	
 }

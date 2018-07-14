@@ -13,11 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import Service.manager.ManejadorSolicitudes.objTelefono;
 import Service.manager.ManejadorSolicitudes.objetoPersona;
 import Service.models.Beneficiario;
 import Service.models.Combustible;
 import Service.models.Documento;
 import Service.models.Persona;
+import Service.models.Telefono;
 import Service.models.TransferenciaBeneficiario;
 
 
@@ -49,6 +51,12 @@ private JdbcTemplate db;
 			} catch (Exception e) {
 				p.setBeneficiario(null);
 			}
+			try {
+				p.setListaTelf(metListaTelefonos(rs.getInt("idper")));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
 			return p;
 	    }
 	}
@@ -80,20 +88,30 @@ private JdbcTemplate db;
 			return d;
 	    }
 	}
+	public class objTelefono implements RowMapper<Telefono>{
+		@Override
+		public Telefono mapRow(ResultSet rs, int arg1) throws SQLException {
+			Telefono t= new Telefono();
+			t.setIdper(rs.getInt("idper"));
+			t.setNumero(rs.getString("numero"));
+			return t;
+	    }
+	}
 	public class objTBeneficiario implements RowMapper<TransferenciaBeneficiario>{
 		@Override
 		public TransferenciaBeneficiario mapRow(ResultSet rs, int arg1) throws SQLException {
 			TransferenciaBeneficiario tf= new TransferenciaBeneficiario();
 			tf.setIdtrasl(rs.getInt("idtrasl"));
 			tf.setIdsolt(rs.getInt("idsolt"));
-			tf.setIdben(rs.getInt("idben"));
+			tf.setIdbenActual(rs.getInt("idbenActual"));
+			tf.setIdbenNuevo(rs.getInt("idbenNuevo"));
 			tf.setFechaTraslado(rs.getString("fechaTraslado"));
 			tf.setMotivoTraslado(rs.getString("motivoTraslado"));
 			tf.setLogin(rs.getString("login"));
 			try {
-				tf.setPersonaNBenf(metPersona(rs.getInt("idben")));
+				tf.setPersonaAnteriorBenf(metPersona(rs.getInt("idbenActual")));
 			} catch (Exception e){
-				tf.setPersonaNBenf(null);
+				tf.setPersonaAnteriorBenf(null);
 			}
 			return tf;
 	    }
@@ -194,6 +212,7 @@ private JdbcTemplate db;
 		String sql="select * from telefono where idper=?";
 		return this.db.queryForList(sql,new Object[] {idper});
 	}
+
 	public boolean modificar(HttpServletRequest req,Persona p,String [] iddocb,String [] tel){
 		int idper= generarIdPer();
 		int idben= generarIdBen();
@@ -275,6 +294,14 @@ private JdbcTemplate db;
 		return this.db.query(sql,new objPersona(),"%"+busq+"%","%"+busq+"%");
 	}
 	//TRANSFERENCIA BENEFICIARIO 
+	public List<Telefono> metListaTelefonos(int idper){
+		String sql="select * from telefono where idper=?";
+		return this.db.query(sql,new objTelefono(),idper);
+	}
+	public int generarIdTraslBen(){
+		String sql="select COALESCE(max(idtrasl),0)+1 as idtrasl from trasladoBeneficiario";
+		return db.queryForObject(sql, Integer.class);
+	}
 	public List<Documento> listaDocumentosTB(){
 		String sql="SELECT * FROM docBeneficiario WHERE estado=1  ORDER BY iddocb ASC";
 		return this.db.query(sql,new objDocumento());
@@ -293,7 +320,72 @@ private JdbcTemplate db;
 	public List<TransferenciaBeneficiario> ListaTB(HttpServletRequest req){
 		String filtro=req.getParameter("filtro");
 		int estado=Integer.parseInt(req.getParameter("estado"));
-		String sql="select tb.* from trasladoBeneficiario tb JOIN solicitud s ON s.idsolt=tb.idsolt JOIN beneficiario b ON b.idben=tb.idben JOIN persona p ON p.idper=b.idper WHERE (concat(p.ap,' ',p.am,' ',p.nombres) LIKE ? or p.ci LIKE ? or s.numSolt LIKE ?) and (b.estado=? or ?=-1) ORDER BY b.idben ASC";
+		String sql="select tb.* from trasladoBeneficiario tb JOIN solicitud s ON s.idsolt=tb.idsolt JOIN beneficiario b ON b.idben=tb.idbenNuevo JOIN persona p ON p.idper=b.idper WHERE (concat(p.ap,' ',p.am,' ',p.nombres) LIKE ? or p.ci LIKE ? or s.numSolt LIKE ?) and (b.estado=? or ?=-1) ORDER BY b.idben ASC";
 		return this.db.query(sql, new objTBeneficiario(),"%"+filtro+"%","%"+filtro+"%","%"+filtro+"%",estado,estado);
+	}
+	public boolean registrarTB(HttpServletRequest req,String [] iddocb,String tel[],Persona p){
+		int idper= generarIdPer();
+		int idbenNuevo= generarIdBen();
+		int idtrasl= generarIdTraslBen();
+		
+		String login=p.getUsuario().getLogin();
+		
+		String sql="";
+		String ci=req.getParameter("ciN");
+		String ciCod=req.getParameter("ciCodN");
+		String nombres=req.getParameter("nombresN");
+		String ap=req.getParameter("apN");
+		String am=req.getParameter("amN");
+		String genero=req.getParameter("generoN");
+		String direccion=req.getParameter("direccionN");
+		String email=req.getParameter("emailN");
+		String institucion=req.getParameter("institucionN");
+		String descripcion=req.getParameter("descripcionN");
+		
+		String placaActual=req.getParameter("placaActual");
+		int idsoltActual=Integer.parseInt(req.getParameter("idsoltActual"));
+		int idbenActual=Integer.parseInt(req.getParameter("idbenActual"));
+		try {
+			sql="INSERT INTO persona(idper,ci,ciCod,nombres,ap,am,genero,direccion,email,estado) VALUES(?,?,?,?,?,?,?,?,?,?)";
+			this.db.update(sql,idper,ci,ciCod,nombres.toUpperCase(),ap.toUpperCase(),am.toUpperCase(),genero,direccion.toUpperCase(),email,1);
+			sql="insert into telefono(numero,idper) values(?,?)";
+			for (int i = 0; i < tel.length; i++) {
+				if(!tel[i].equals("")) {
+					this.db.update(sql,tel[i],idper);
+				}
+			}	
+			sql="INSERT INTO beneficiario(idben,institucion,descripcion,estado,idper) VALUES(?,?,?,?,?)";
+			this.db.update(sql,idbenNuevo,institucion.toUpperCase(),descripcion.toUpperCase(),1,idper);
+			sql="INSERT INTO bendoc(idben,iddocb) VALUES(?,?)";
+			for (int i = 0; i < iddocb.length; i++) {
+				this.db.update(sql,idbenNuevo,Integer.parseInt(iddocb[i]));	
+			}
+			
+			//AQUI CAMBIA EL ESTADO DEL ANTERIOR BENEFICIARIO Y DE AHI SE TRASLADA DE BENEFICIARIO AFECTANDO LA TABLA benVehSolt
+			sql="UPDATE beneficiario SET estado=? WHERE idben=?";
+			this.db.update(sql,0,idbenActual);
+			
+			//TRASLADANDO BENEFICIARIO
+			sql="INSERT INTO benVehSolt(idben,placa,idsolt) VALUES(?,?,?)";
+			this.db.update(sql,idbenNuevo,placaActual,idsoltActual);
+			
+			//REGISTRANDO EL TRASLADO
+			sql="INSERT INTO trasladoBeneficiario(idtrasl,idsolt,idbenActual,motivoTraslado,idbenNuevo,login) VALUES(?,?,?,?,?,?)";
+			this.db.update(sql,idtrasl,idsoltActual,idbenActual,descripcion.toUpperCase(),idbenNuevo,login);
+			
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public TransferenciaBeneficiario verTBeneficiario(int id) {
+		String sql="select * from trasladoBeneficiario where idtrasl=?";
+		return this.db.queryForObject(sql,new objTBeneficiario(),id);
+	}
+	public List<Telefono> ListaTelf_TB(int id){
+		String sql="SELECT t.* FROM persona p,telefono t  where p.idper=t.idper and p.idper=?";
+		return this.db.query(sql,new objTelefono(),id);
 	}
 }

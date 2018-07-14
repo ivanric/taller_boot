@@ -13,7 +13,7 @@
 		<queryString language="SQL">
 			<![CDATA[SELECT db.nombre, 'SI' as OK  
 FROM  dbo.beneficiario b,dbo.docBeneficiario db,dbo.solicitud s,dbo.benVehSolt bvs,bendoc bd 
-WHERE b.idben=bvs.idben AND bvs.idsolt=s.idsolt AND b.idben=bd.idben AND bd.iddocb=db.iddocb AND s.idsolt=$P{idsolt_param}]]>
+WHERE b.idben=bvs.idben AND b.estado=1 AND bvs.idsolt=s.idsolt AND b.idben=bd.idben AND bd.iddocb=db.iddocb AND s.idsolt=$P{idsolt_param}]]>
 		</queryString>
 		<field name="nombre" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.label" value="nombre"/>
@@ -72,7 +72,7 @@ SELECT c.nombre, 0 as conComb FROM dbo.solicitud s,beneficiario b,dbo.benVehSolt
 	dbo.tipoMotorVehiculo tpM,	
 	dbo.benVehSolt bvs
 WHERE 
-p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND v.placa=bvs.placa AND v.idmarcv=mar.idmarcv ANd v.idmodv=mod.idmodv AND v.idtipv=tp.idtipv AND v.idTipSv=tpS.idTipSv AND v.idtipoMotorVeh=tpM.idtipoMotorVeh AND s.idsolt=$P{idsolt_param}]]>
+p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND b.estado=1 AND v.placa=bvs.placa AND v.idmarcv=mar.idmarcv ANd v.idmodv=mod.idmodv AND v.idtipv=tp.idtipv AND v.idTipSv=tpS.idTipSv AND v.idtipoMotorVeh=tpM.idtipoMotorVeh AND s.idsolt=$P{idsolt_param}]]>
 	</queryString>
 	<field name="idsolt" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="idsolt"/>
@@ -328,7 +328,8 @@ p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND v.placa=bvs.pl
 					<textElement verticalAlignment="Top">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{institucion}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{institucion}.equalsIgnoreCase("")?("NO TIENE") : ($F{institucion}))
+]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement positionType="FixRelativeToBottom" x="220" y="35" width="130" height="19" forecolor="#000000" uuid="99f9c3ab-ced3-4f70-8a1c-af0b61e4edd7">
@@ -340,7 +341,7 @@ p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND v.placa=bvs.pl
 					<text><![CDATA[Telefono/Celular]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="221" y="54" width="113" height="30" uuid="651026dd-87ef-4a9d-a3dc-e376d9b9a766"/>
+					<reportElement x="221" y="54" width="159" height="20" uuid="651026dd-87ef-4a9d-a3dc-e376d9b9a766"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
@@ -374,7 +375,7 @@ p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND v.placa=bvs.pl
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-						<datasetRun subDataset="ListaDocumentos" uuid="3c51bf16-bfbd-4d3e-b155-48c418f62c76">
+						<datasetRun subDataset="ListaDocumentos" uuid="4dac4731-6b45-4297-b709-96d62190d79d">
 							<datasetParameter name="idsolt_param">
 								<datasetParameterExpression><![CDATA[$P{idsolt_param}]]></datasetParameterExpression>
 							</datasetParameter>
@@ -382,7 +383,7 @@ p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND v.placa=bvs.pl
 						</datasetRun>
 						<jr:listContents height="15" width="260">
 							<textField>
-								<reportElement x="0" y="0" width="100" height="13" uuid="2a9eee37-5fa2-4764-9fb9-b59c00177681">
+								<reportElement x="0" y="0" width="150" height="13" uuid="2a9eee37-5fa2-4764-9fb9-b59c00177681">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
@@ -604,7 +605,8 @@ p.idper=b.idper AND s.idsolt=bvs.idsolt AND b.idben=bvs.idben AND v.placa=bvs.pl
 			<textField>
 				<reportElement x="1" y="261" width="569" height="19" uuid="cb0c0574-8e7b-4359-a997-25800bfc7b3e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{observaciones}.equalsIgnoreCase("")?("NINGUNA") : ($F{observaciones}))
+]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="1" y="309" width="79" height="19" uuid="c0088a4e-4b27-4822-ad9c-b0c1ba414960"/>

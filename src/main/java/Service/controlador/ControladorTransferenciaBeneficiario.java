@@ -30,6 +30,7 @@ public class ControladorTransferenciaBeneficiario {
 	@RequestMapping({"Gestion"})
 	public String gestion(HttpServletRequest request,Model m){
 		HttpSession sesion=request.getSession(true);
+	
 		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		try {
 			if (xuser==null) {
@@ -43,7 +44,8 @@ public class ControladorTransferenciaBeneficiario {
 			e.printStackTrace();
 			m.addAttribute("mensaje","Usuario no Autorizado..");
 			return "principal/cerrarSession";
-		}
+		}  
+		System.out.println("entro");
 		return "transferenciaBeneficiario/gestion";
 	}
 	@RequestMapping({"modal-add"})
@@ -64,9 +66,9 @@ public class ControladorTransferenciaBeneficiario {
 		}
 		return "transferenciaBeneficiario/modal-adicionar";
 	}
-	@RequestMapping({"modal-mod"})
-	public String modal_mod(HttpServletRequest request,Model m){
-		List<Documento> listaDocumentos;
+	
+	@RequestMapping({"modal-ver"})
+	public String modal_ver(HttpServletRequest request,Model m){
 		HttpSession sesion=request.getSession(true);
 		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		try {
@@ -74,8 +76,6 @@ public class ControladorTransferenciaBeneficiario {
 				m.addAttribute("mensaje","Usuario no Autorizado..");
 				return "principal/cerrarSession";
 			} else {
-				listaDocumentos=this.manejadorBeneficiarios.getDocumentos(Integer.parseInt(request.getParameter("idben")));
-				m.addAttribute("listaDoc",listaDocumentos);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -83,29 +83,8 @@ public class ControladorTransferenciaBeneficiario {
 			m.addAttribute("mensaje","Usuario no Autorizado..");
 			return "principal/cerrarSession";
 		}
-		return "beneficiarios/modal-modificar";
+		return "transferenciaBeneficiario/modal-ver";
 	}
-	
-	@Autowired
-	DataSource dataSource;
-	@RequestMapping("listaReporte")
-	public  void ListaR(HttpServletResponse res,HttpServletRequest req){
-		String nombreReporte="Lista de Beeneficiarios",tipo="pdf", estado="inline";
-		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
-		Map<String, Object> parametros=new HashMap<String, Object>();
-		String url="/Service/reportes/reporte1.jasper";	;
-		
-//		parametros.put("codt", codt);
-//		parametros.put("usuario", us.getNombre()+" "+us.getAp()+" "+us.getAm());
-			
-		GeneradorReportes g=new GeneradorReportes();
-		try{
-			g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
-	
 
 	
 }

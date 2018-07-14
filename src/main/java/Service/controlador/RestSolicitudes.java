@@ -220,7 +220,7 @@ public class RestSolicitudes {
 		System.out.println("input_param: "+this.getClass().getResourceAsStream(direccionBol));
 		    
 		Map<String, Object> parametros=new HashMap<String, Object>();
-		                     
+		                      
 		String url="/Service/reportes/solicitud.jasper"; 	
 	                                
 		parametros.put("idsolt_param",Integer.parseInt(idsolt));

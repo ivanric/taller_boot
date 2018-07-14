@@ -9,7 +9,6 @@
 <title>gestion</title>
 </head>
 <body>
-   
 	<!-- <h2 style="text-align: center;">GESTION BENEFICIARIOS</h2> -->
 	<div class="card z-depth-2">
 		<div class="card-header">
@@ -75,8 +74,6 @@
 	
 	<script type="text/javascript">
         var result=Get_Opciones(null);
-        // console.log('GESTION_LIST: ',result)
-        // console.log('tam: ',result.AccionesUser.length)
         if(ExisteOpcion('adicionar')){
             $('#btn-add').attr({
                 onclick:"(Gestionar.add())",
@@ -84,7 +81,6 @@
                 })
             $('#btn-add').removeAttr("disabled ").focus().val("Ahora si lo puedes utilizar")
         }
-
         function ExisteOpcion(opc){
             // alert('entro comparar')
             var resultado=false;
@@ -97,16 +93,13 @@
             // console.log('result_dentro:',resultado)              
             return resultado;
         }
-
         var filtro=$('#filt-ben').val();
         var estado=$('input[name="iestado"]:checked').val();
         listar();
-
         $('#filt-ben').on('keyup',function(){
             filtro=$(this).val();
             listar();
         })
-
         $('input[name="iestado"]').on('change',function(){
             estado=$(this).val();
             listar();
@@ -135,7 +128,6 @@
                 }
             })
         }
-      
         function iniciarDatable(lista){
             console.log('respuestaAjax: ',lista);
             DTable=$('#tablaData').DataTable({
@@ -148,50 +140,37 @@
                 "pageLength":5,
                 data:lista,
                 columns:[
-                    {data:'idben'},
-                    {data:'idben'},
-                    {data:'idben'},
-                    {data:'idben'},
-                    {data:'idben'},
-                    {data:'idben'},
-                    {data:'idben'},
-                    {data:'idben'}, 
-                    {data:'idben'},
-                    {data:'idben'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'}, 
+                    {data:'idbenNuevo'},
+                    {data:'idbenNuevo'},
                 ]
                 ,
                 "createdRow":function(row,data,index){
                     $('td',row).eq(0).html(index+1).addClass('text-center');
-                    /*
-                    $('td',row).eq(1).html(data.ap+' '+data.am+' '+data.nombres)
-                    $('td',row).eq(2).html(data.ci)
-                    $('td',row).eq(3).html(data.direccion)
-                    if(data.beneficiario.estado==1){
-                        $('td',row).eq(4).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center').addClass('text-center');
+                    $('td',row).eq(1).html(data.fechaTraslado)
+                    $('td',row).eq(2).html(data.registroKit.ordenServicio.solicitud.numSolt)
+                    $('td',row).eq(3).html(data.registroKit.ordenServicio.solicitud.vehiculo.placa)
+                    $('td',row).eq(4).html(data.personaAnteriorBenf.ap+' '+data.personaAnteriorBenf.am+' '+data.personaAnteriorBenf.nombres)
+                    $('td',row).eq(5).html(data.registroKit.ordenServicio.solicitud.persona.ap+' '+data.registroKit.ordenServicio.solicitud.persona.am+' '+data.registroKit.ordenServicio.solicitud.persona.nombres)
+                    $('td',row).eq(6).html(data.registroKit.ordenServicio.solicitud.persona.ci)
+                    $('td',row).eq(7).html(data.registroKit.ordenServicio.solicitud.persona.direccion)
+                    if(data.registroKit.ordenServicio.solicitud.persona.beneficiario.estado==1){
+                        $('td',row).eq(8).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center').addClass('text-center');
                     }else{
-                        $('td',row).eq(4).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></button>').addClass('text-center').addClass('text-center');
+                        $('td',row).eq(8).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></button>').addClass('text-center').addClass('text-center');
                     }
-                    if(ExisteOpcion('modificar')){
-                        $('td',row).eq(5).html('<button id="btn-mod" class="btn btn-info btn-sm waves-effect btn-espacio" accesskey="'+data.beneficiario.idben+'" data-href="'+data.beneficiario.idper+'" onclick="(Beneficiario.mod(this))"><span class="zmdi zmdi-edit"></span> Modificar</button>')
-                        // $('td',row).eq(5).append('<button>hola</button>')
+                    if(ExisteOpcion('ver')  ){
+                        $('td',row).eq(9).html('<button id="btn-ver" class="btn bgm-cyan waves-effect btn-sm btn-espacio" accesskey="'+data.idtrasl+'" data-href="'+data.idtrasl+'" onclick="(Gestionar.ver(this))"><span class="zmdi zmdi-print"></span> Ver Transferencia</button>');
                     }else{
-                        $('td',row).eq(5).html('<button id="btn-mod" class="btn btn-info btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-edit"></span> Modificar</button>') 
+                        $('td',row).eq(9).html('<button id="btn-ver" class="btn bgm-cyan waves-effect btn-sm  btn-espacio" disabled="disabled"><span class="zmdi zmdi-print"></span>Ver Transferencia</button>');  
                     }
-                    if(data.beneficiario.estado==1){
-                        if(ExisteOpcion('eliminar')  ){
-                            // if()
-                            $('td',row).eq(5).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" accesskey="'+data.beneficiario.idben+'" data-href="'+data.beneficiario.idper+'" onclick="(Beneficiario.elim(this))"><span class="zmdi zmdi-delete"></span> Eliminar</button>');
-                        }else{
-                            $('td',row).eq(5).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-delete"></span> Eliminar</button>');  
-                        }
-                    }else{
-                        if(ExisteOpcion('habilitar')){
-                            $('td',row).eq(5).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" accesskey="'+data.beneficiario.idben+'" data-href="'+data.beneficiario.idper+'" onclick="(Beneficiario.hab(this))"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');
-                        }else{
-                            $('td',row).eq(5).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');   
-                        }                       
-                    }
-                    */
                 }
                 ,
                 "fnDrawCallback":function(oSetttings){
@@ -199,7 +178,6 @@
                 }
             });
         }
-
         function destruir(dt){
             console.log('destroy')
             dt.destroy();
@@ -399,21 +377,6 @@
                                 contador_tam=index+1;
 
                                 $('#js_doc').append(
-                                    // `
-                                    // <div class="col-md-12">
-                                    //     <div class="">
-                                    //         <label for="form-group" class="col-md-8 control-label"><b>${item.nombre}:</b></label>
-                                    //         <div class="col-md-4">
-                                    //             <label class="radio-inline">
-                                    //               <input type="radio" style="margin-top: 1px;" id=""  value="${item.iddocb}" name="documentos[]" data-fv-notempty="true" data-fv-message="Requiere Genero"> SI
-                                    //             </label>
-                                    //             <label class="radio-inline">
-                                    //               <input type="radio" style="margin-top: 1px;" id=""  value="${item.iddocb}" name="documentos[]" data-fv-notempty="true" data-fv-message="Requiere Genero"> NO
-                                    //             </label> 
-                                    //         </div>
-                                    //     </div>
-                                    // </div>
-                                    // `
                                     `<div class="checkbox m-b-15">
                                         <label>
                                             <input value="${item.iddocb}" type="checkbox" name="documentos[]" >
@@ -428,7 +391,7 @@
                         })
                         function Registrar(){
                             swal({   
-                                title: "Seguro de transferir Beneficiario?",   
+                                title: "Seguro de Transferir Beneficiario?",   
                                 text: "Usted registrara una transferencia de Beneficiario",   
                                 type: "warning",   
                                 showCancelButton: true,   
@@ -444,7 +407,7 @@
                                                 console.log('registrado',res)
                                                 if(res.estado){
                                                     $.ajax({
-                                                        url:"../TBeneficiarios/Gestion",
+                                                        url:"../TBeneficiario/Gestion",
                                                         success:function(gestion){
                                                             $('#contenedor-gestion').html(gestion); 
                                                             swal({
@@ -482,7 +445,31 @@
                         location.href="../principal/index"
                     }
                 })
-            }
+            },
+            ver:function(a){
+                idTb=$(a).attr('accesskey');
+                console.log('idTb: ',idTb)
+                $.ajax({
+                    url:'../TBeneficiario/modal-ver',
+                    type:"post",
+                    success:function(resp){
+                        $('#cont-modales').html(resp);
+                        $('#modal-ver').modal('show');
+                        $('#formulario-ver').formValidation({
+                        }).on('success.form.fv', function(e){
+                           e.preventDefault();
+                           imprimir();
+                        })
+                        function imprimir(){
+                            $("#frameReportes").attr("src",'../RestTBeneficiarios/Imprimir?idtrasl='+idTb);
+                            $("#reportes").modal('show'); 
+                        }
+                    },
+                    error:function(){
+                        alert('error sin respuesta del Servidor')
+                    }
+                })
+            },
             
         }
 
