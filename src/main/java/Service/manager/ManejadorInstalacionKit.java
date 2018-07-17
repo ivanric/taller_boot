@@ -226,7 +226,8 @@ public class ManejadorInstalacionKit {
 	}
 	/*TRANSFERENCIA BENEFICIARIO*/
 	public RegistroKit getRegistroKitTB(int id) {
-		String sql="SELECT rk.* FROM registroKit rk JOIN ordenServicio os ON os.idordserv=rk.idordserv JOIN solicitud s ON s.idsolt=os.idsolt JOIN trasladoBeneficiario tb ON tb.idsolt=s.idsolt WHERE tb.idsolt=?";
+		//String sql="SELECT rk.* FROM registroKit rk JOIN ordenServicio os ON os.idordserv=rk.idordserv JOIN solicitud s ON s.idsolt=os.idsolt JOIN trasladoBeneficiario tb ON tb.idsolt=s.idsolt WHERE tb.idsolt=?";
+		String sql="SELECT rk.* FROM registroKit rk JOIN ordenServicio os ON os.idordserv=rk.idordserv JOIN solicitud s ON s.idsolt=os.idsolt  WHERE s.idsolt=?";
 		return this.db.queryForObject(sql,new objRegistroKit(),id);
 	}
 	public List<RegistroKit> FiltroRegistroKitTB(String cadena){

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import Service.manager.ManejadorServicios.objServicios;
 import Service.models.Modulo;
 import Service.models.Opcion;
+import Service.models.Persona;
 import Service.models.Proceso;
 import Service.models.Rol;
+import Service.models.Servicio;
 
 
 
@@ -112,7 +116,95 @@ public class ManejadorRoles{
 	}
 	
 	
-
+	//RESTROLES
+	public List<Rol> ListarRoles(HttpServletRequest req){
+		String filtro=req.getParameter("filtro");
+		int estado=Integer.parseInt(req.getParameter("estado"));
+		String sql="SELECT r.* FROM rol r where (r.nombre LIKE ?) and (r.estado=? or ?=-1) ORDER BY r.idrol ASC";
+		return this.db.query(sql, new objRol(),"%"+filtro+"%",estado,estado);
+	}
+	
+	public boolean registrar(HttpServletRequest req,Persona xuser) {
+		String sql="";
+		int idrol=generarIdRol();
+		try {
+			sql="INSERT INTO rol(idrol,nombre) VALUES(?,?)";
+			this.db.update(sql,idrol,req.getParameter("nombre").toUpperCase());
+			return true;
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public Rol datosModificar(HttpServletRequest req){
+		String sql="";
+		Rol r=null;
+		int idrol=Integer.parseInt(req.getParameter("idrol"));
+		System.out.println("idrol: "+idrol);
+		try {
+			sql="SELECT r.* FROM rol r WHERE r.idrol=?";
+			r=this.db.queryForObject(sql,new objRol(),idrol);
+		} catch (Exception e) {
+			r=null;
+		}
+		return r;
+	}
+	public boolean modificar(HttpServletRequest req,Persona xuser){
+		String sql="";
+		int idrol=Integer.parseInt(req.getParameter("idrol"));
+		
+		try {
+			sql="UPDATE rol SET nombre=? WHERE idrol=?";
+			this.db.update(sql,req.getParameter("nombre").toUpperCase(),idrol);
+			
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean eliminar(Integer id){
+		String sql="";
+		try {
+			sql="UPDATE rol  SET estado=0 WHERE idrol=?";
+			int a=this.db.update(sql,id);
+			this.db.update(sql,id);
+			System.out.println("sql_elimino: "+a);
+			if (a==1) {
+				return true;	
+			} else {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean habilitar(Integer id){
+		String sql="";
+		try {
+			sql="UPDATE rol SET estado=1 WHERE idrol=?";
+			int a=this.db.update(sql,id);
+			this.db.update(sql,id);
+			System.out.println("sql_habilito: "+a);
+			if (a==1) {
+				return true;	
+			} else {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public int generarIdRol(){
+		String sql="select COALESCE(max(idrol),0)+1 as idrol from rol";
+		return db.queryForObject(sql, Integer.class);
+	}
 
 	
 

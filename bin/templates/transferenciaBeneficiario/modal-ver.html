@@ -7,7 +7,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title></title>
-</head> 
+</head>  
 <body>
 	<form id="formulario-ver" action="#"
 		method="post" data-fv-excluded="disabled"
@@ -71,7 +71,7 @@
 		                        </div>
 		                    </fieldset>
 							<fieldset>
-								<legend><strong>BENEFICIARIO ACTUAL</strong></legend>
+								<legend><strong>BENEFICIARIO ANTERIOR</strong></legend>
 								
 								<div class="row datos-AnteriorBeneficiario">
 								    <div class="col-md-6">
@@ -415,8 +415,8 @@
             $('input[name="fechaSolt"]').val(objetoFiltro.registroKit.ordenServicio.solicitud.fecha)
             
             //BENEFICIARIO ANTERIOR
-            $('.datos-AnteriorBeneficiario').loadJSON(objetoFiltro.registroKit.ordenServicio.solicitud.persona)
-            $('.datos-AnteriorBeneficiario').find('input[name="institucion"]').val(objetoFiltro.registroKit.ordenServicio.solicitud.persona.beneficiario.institucion)      
+            $('.datos-AnteriorBeneficiario').loadJSON(objetoFiltro.personaAnteriorBenf)
+            $('.datos-AnteriorBeneficiario').find('input[name="institucion"]').val(objetoFiltro.personaAnteriorBenf.beneficiario.institucion)      
             var Telefonos1='';
             $(objetoFiltro.personaAnteriorBenf.listaTelf).each(function(i,d){
                 Telefonos1+=d.numero+' '
@@ -453,17 +453,17 @@
 
 
              //BENEFICIARIO ANTERIOR
-            $('.datos-NuevoBeneficiario').loadJSON(objetoFiltro.personaAnteriorBenf)
-            $('.datos-NuevoBeneficiario').find('input[name="institucion"]').val(objetoFiltro.personaAnteriorBenf.beneficiario.institucion)      
+            $('.datos-NuevoBeneficiario').loadJSON(objetoFiltro.personaNuevoBenf)
+            $('.datos-NuevoBeneficiario').find('input[name="institucion"]').val(objetoFiltro.personaNuevoBenf.beneficiario.institucion)      
             var Telefonos2='';
-            $(objetoFiltro.registroKit.ordenServicio.solicitud.persona.listaTelf).each(function(i,d){
+            $(objetoFiltro.personaNuevoBenf.listaTelf).each(function(i,d){
                 Telefonos2+=d.numero+' '
             })
             $('.datos-NuevoBeneficiario').find('input[name="telefonos"]').val(Telefonos2)
 
         	$(datos[1]).each(function(i,tg){
                 var checked1="",checked2="";
-				$(objetoFiltro.personaAnteriorBenf.beneficiario.documentos).each(function(j,it){
+				$(objetoFiltro.personaNuevoBenf.beneficiario.documentos).each(function(j,it){
 	                if (tg.iddocb==it.iddocb) {
 	                    checked1="checked";
 	                }

@@ -37,7 +37,7 @@
 </head>
 <body>
 
-	<form id="formulario-add" action="../RestActaRecepcion/adicionar" method="post" 
+<!-- 	<form id="formulario-add" action="../RestActaRecepcion/adicionar" method="post" 
 	    data-fv-excluded="disabled">
 
 	    <div class="" id="modal-add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="">
@@ -58,7 +58,6 @@
 	                    </div>
 	                </div>
 	                <div class="modal-body">
-	                    <!-- .row>.col-md-6*2>.form-group>(label.col-md-6.control-label.espacio-form>b{campo})+.col-md-6>.fg-line>select.form-control>option{opcion $}*2 -->
 	                     <div class="row">
 	                        <div class="col-md-2"></div>
 	                        <div class="col-md-8">
@@ -890,8 +889,191 @@
 			
 			</div>
 		</div>	
-	</form>
+	</form> -->
+	<form id="formulario-add" action="../RestRoles/adicionar"
+		method="post" data-fv-excluded="disabled"
+		>
+		<div class="" id="modal-add" tabindex="-1" role="dialog"
+			data-backdrop="static" data-keyboard="false" aria-hidden="true"
+			style="">
+			<div class="modal-dialog modal-md" role="document" style="">
+					<div class="modal-content">
+						<div class="card">
+							<div class="card-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h2>
+									Nuevo Servicio<small>Llene los campos por favor</small>
+								</h2>
+							</div>
+							<div class="modal-body">
+	                            <fieldset>
+	                                <legend><strong>BENEFICIARIO NUEVO</strong></legend>
+	                                <div class="row">
+	                                    <div class="col-md-4">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-4 control-label"><b>Cédula:</b></label>
+	                                            <div class="col-md-8">
+	                                                <div class="fg-line"><input type="text" class="form-control mcss_input"  name="ciN" minlength="7" maxlength="8" data-fv-stringlength-message="La Cedula debe ser entre 7 u 8 caracteres" id="cedula"  data-fv-notempty="true" data-fv-message="Requiere Cedula" data-fv-integer="true" data-fv-integer-message="El valor de este campo debe ser numerico y sin espacios en blanco"></div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-2">
+	                                        <div class="form-group" style="margin-top: -10px;margin-bottom: 0;">
+	                                            <div class="fg-line">
+	                                                <select data-placeholder="n" name="ciCodN" class="form-control" data-fv-notempty='true' data-fv-message="Requiere Ciudadania" id="ciCod">
+	                                                    <!-- <option value="">SEL</option> -->
+	                                                    <option value="TJ">TJ</option>
+	                                                    <option value="PT">PT</option>
+	                                                    <option value="PA">PA</option>
+	                                                    <option value="LP">LP</option>
+	                                                    <option value="OR">OR</option>
+	                                                    <option value="CB">CB</option>
+	                                                    <option value="BN">BN</option>
+	                                                    <option value="CH">CH</option>
+	                                                    <option value="SC">SC</option>
+	                                                </select>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-4 control-label"><b>Nombres:</b></label>
+	                                            <div class="col-md-8">
+	                                                <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="nombresN" data-fv-notempty="true" data-fv-message="Requiere Nombres" maxlength="12" data-fv-stringlength-message="Solo 12 caracteres"></div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="row">    
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-4 control-label"><b>Ap. Patr:</b></label>
+	                                            <div class="col-md-8">
+	                                                <div class="fg-line"><input type="text" class="form-control mcss_input"  name="apN" data-fv-notempty="true" data-fv-message="Requiere Apellido Paterno" maxlength="12" data-fv-stringlength-message="Solo 12 caracteres"></div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-4 control-label"><b>Ap. Matr:</b></label>
+	                                            <div class="col-md-8">
+	                                                <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="amN" maxlength="12" data-fv-stringlength-message="Solo 12 caracteres"></div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-3 control-label"><b>Género:</b></label>
+	                                            <div class="col-md-9" style="margin-top: 4px;">
+	                                                <label class="radio-inline" style="margin-right: -12px;">
+	                                                  <input type="radio" style="margin-top: 1px;" id=""  value="m" name="generoN" data-fv-notempty="true" data-fv-message="Requiere Genero"> Masculino
+	                                                </label>
+	                                                <label class="radio-inline">
+	                                                  <input type="radio" style="margin-top: 1px;" id=""  value="f" name="generoN" data-fv-notempty="true" data-fv-message="Requiere Genero"> Femenino
+	                                                </label> 
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-4 control-label"><b>Dirección:</b></label>
+	                                            <div class="col-md-8">
+	                                                <div class="fg-line"><input type="text" class="form-control mcss_input"  name="direccionN" data-fv-notempty="true" data-fv-message="Requiere Dirección" maxlength="40"></div>
+	                                            </div>
+	                                        </div> 
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <label for="" class="col-md-4 control-label"><b>Correo:</b></label>
+	                                            <div class="col-md-8">
+	                                                <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="emailN" maxlength='40' data-fv-stringlength-message=''></div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <br>
+	                                <div class="row">
+	                                    <div class="col-md-12">
+	                                        <div class="form-group fg-float">
+	                                            <div class="col-md-12">
+	                                                <label class="control-label"><b>Descripcion</b></label>
+	                                                <div class="fg-line">
+	                                                    <textarea  class="form-control fg-input" id="text-desc" name="descripcionN" type="descripcion" maxlength="100"  data-fv-stringlength-message='' placeholder="Ingrese alguna descripcion o motivo">                                    
+	                                                    </textarea>
+	                                                </div>
+	                                                
+	                                            </div>
+	                                        </div>    
+	                                    </div>
+	                                </div>
+	                                <br>
+	                                <div class="row">
+	                                    <div class="col-md-12">
+	                                        
+	                                        <div class="form-group">
+	                                            <label class="col-xs-3 control-label"><b>Telefonos/Celulares</b></label>
+	                                            <div class="col-xs-5">
+	                                                <input type="text"  class="form-control" name="telefono[]" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
+	                                            </div>
+	                                            <div class="col-xs-4">
+	                                                <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+	                                            </div>
+	                                        </div>
+	                                    
+	                                        <div class="form-group hide" id="optionTemplate" >
+	                                            <div class="col-xs-offset-3 col-xs-5">
+	                                                <input class="form-control" type="text" name="" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
+	                                            </div>
+	                                            <div class="col-xs-4">
+	                                                <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <br>
+	                            </fieldset> 
+								<fieldset>
+									<legend><strong>TALLER</strong></legend>
+										<div class="row">
+											<div class="col-md-6">
+												<label for="" class="col-md-12 control-label espacio-form"><b>Nombre de Taller</b></label>
+												<div class="col-md-12">
+													<div class="form-group">
+														<div class="fg-line">
+															<input type="text" placeholder="ingrese nombre de taller" maxlength="50" data-fv-stringlength-message="Maximo 50 caracteres" class="form-control input-sm"  data-fv-notempty="true" data-fv-message="Campo Requerido" name="nombretall">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<label for="" class="col-md-12 control-label espacio-form"><b>Dirección de Taller</b></label>
+												<div class="col-md-12">
+													<div class="form-group">
+														<div class="fg-line">
+															<input type="text" placeholder="ingrese nombre de taller" maxlength="50" data-fv-stringlength-message="Maximo 50 caracteres" class="form-control input-sm"  data-fv-notempty="true" data-fv-message="Campo Requerido" name="direcciontall">
+														</div>
+													</div>
+												</div>
+											</div>
+									
+										</div>
+								</fieldset>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" id="btn-guardar-aprob"
+									class="btn btn-primary waves-effect">Guardar</button>
+								<button type="button" class="btn btn-danger waves-effect"
+									data-dismiss="modal">Cancelar</button>
+							</div>
 
+						</div>
+					</div>
+			</div>
+		</div>
+	</form>
 	<script type="" src="../../static/bower_components/jquery/dist/jquery.js" th:src="@{/bower_components/jquery/dist/jquery.js}"></script>
     <script type="" src="../../static/bower_components/bootstrap/dist/js/bootstrap.js" th:src="@{/bower_components/bootstrap/dist/js/bootstrap.js}"></script>
     <!-- <script type="" src="../bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script> -->

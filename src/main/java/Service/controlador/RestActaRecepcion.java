@@ -100,7 +100,6 @@ public class RestActaRecepcion {
 		try{
 			Object[] consulta=this.manejadorActaRecepcion.registrar(req,xuser);
 			System.out.println("resp: "+consulta);
-			//respuesta.put("estado", true);
 			respuesta.put("estado", consulta[0]);
 			respuesta.put("idRecep",Integer.parseInt(consulta[1].toString()));
 		}catch (Exception e){

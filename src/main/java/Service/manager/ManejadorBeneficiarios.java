@@ -54,7 +54,7 @@ private JdbcTemplate db;
 			try {
 				p.setListaTelf(metListaTelefonos(rs.getInt("idper")));
 			} catch (Exception e) {
-				// TODO: handle exception
+				p.setListaTelf(null);
 			}
 			
 			return p;
@@ -112,6 +112,11 @@ private JdbcTemplate db;
 				tf.setPersonaAnteriorBenf(metPersona(rs.getInt("idbenActual")));
 			} catch (Exception e){
 				tf.setPersonaAnteriorBenf(null);
+			}
+			try {
+				tf.setPersonaNuevoBenf(metPersona(rs.getInt("idbenNuevo")));
+			} catch (Exception e){
+				tf.setPersonaNuevoBenf(null);
 			}
 			return tf;
 	    }
@@ -323,11 +328,11 @@ private JdbcTemplate db;
 		String sql="select tb.* from trasladoBeneficiario tb JOIN solicitud s ON s.idsolt=tb.idsolt JOIN beneficiario b ON b.idben=tb.idbenNuevo JOIN persona p ON p.idper=b.idper WHERE (concat(p.ap,' ',p.am,' ',p.nombres) LIKE ? or p.ci LIKE ? or s.numSolt LIKE ?) and (b.estado=? or ?=-1) ORDER BY b.idben ASC";
 		return this.db.query(sql, new objTBeneficiario(),"%"+filtro+"%","%"+filtro+"%","%"+filtro+"%",estado,estado);
 	}
-	public boolean registrarTB(HttpServletRequest req,String [] iddocb,String tel[],Persona p){
+	public Object[]  registrarTB(HttpServletRequest req,String [] iddocb,String tel[],Persona p){
 		int idper= generarIdPer();
 		int idbenNuevo= generarIdBen();
 		int idtrasl= generarIdTraslBen();
-		
+		Object [] resp=new Object[2];
 		String login=p.getUsuario().getLogin();
 		
 		String sql="";
@@ -373,11 +378,14 @@ private JdbcTemplate db;
 			sql="INSERT INTO trasladoBeneficiario(idtrasl,idsolt,idbenActual,motivoTraslado,idbenNuevo,login) VALUES(?,?,?,?,?,?)";
 			this.db.update(sql,idtrasl,idsoltActual,idbenActual,descripcion.toUpperCase(),idbenNuevo,login);
 			
-			return true;
+			resp[0]=true;
+			resp[1]=idtrasl;
+			return resp;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return false;
+			resp[0]=false;
+			return resp;
 		}
 	}
 	public TransferenciaBeneficiario verTBeneficiario(int id) {

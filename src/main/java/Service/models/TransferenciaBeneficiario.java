@@ -4,13 +4,14 @@ public class TransferenciaBeneficiario {
 	protected Integer idtrasl,idsolt,idbenActual,idbenNuevo;
 	protected String fechaTraslado,motivoTraslado,login;
 	protected Persona personaAnteriorBenf;
+	protected Persona personaNuevoBenf;
 	protected RegistroKit registroKit;
 	public TransferenciaBeneficiario() {
 
 	}
 	public TransferenciaBeneficiario(Integer idtrasl, Integer idsolt, Integer idbenActual, Integer idbenNuevo,
 			String fechaTraslado, String motivoTraslado, String login, Persona personaAnteriorBenf,
-			RegistroKit registroKit) {
+			Persona personaNuevoBenf, RegistroKit registroKit) {
 		super();
 		this.idtrasl = idtrasl;
 		this.idsolt = idsolt;
@@ -20,6 +21,7 @@ public class TransferenciaBeneficiario {
 		this.motivoTraslado = motivoTraslado;
 		this.login = login;
 		this.personaAnteriorBenf = personaAnteriorBenf;
+		this.personaNuevoBenf = personaNuevoBenf;
 		this.registroKit = registroKit;
 	}
 	public Integer getIdtrasl() {
@@ -70,6 +72,12 @@ public class TransferenciaBeneficiario {
 	public void setPersonaAnteriorBenf(Persona personaAnteriorBenf) {
 		this.personaAnteriorBenf = personaAnteriorBenf;
 	}
+	public Persona getPersonaNuevoBenf() {
+		return personaNuevoBenf;
+	}
+	public void setPersonaNuevoBenf(Persona personaNuevoBenf) {
+		this.personaNuevoBenf = personaNuevoBenf;
+	}
 	public RegistroKit getRegistroKit() {
 		return registroKit;
 	}
@@ -81,8 +89,13 @@ public class TransferenciaBeneficiario {
 		return "TransferenciaBeneficiario [idtrasl=" + idtrasl + ", idsolt=" + idsolt + ", idbenActual=" + idbenActual
 				+ ", idbenNuevo=" + idbenNuevo + ", fechaTraslado=" + fechaTraslado + ", motivoTraslado="
 				+ motivoTraslado + ", login=" + login + ", personaAnteriorBenf=" + personaAnteriorBenf
-				+ ", registroKit=" + registroKit + "]";
+				+ ", personaNuevoBenf=" + personaNuevoBenf + ", registroKit=" + registroKit + ", getIdtrasl()="
+				+ getIdtrasl() + ", getIdsolt()=" + getIdsolt() + ", getIdbenActual()=" + getIdbenActual()
+				+ ", getIdbenNuevo()=" + getIdbenNuevo() + ", getFechaTraslado()=" + getFechaTraslado()
+				+ ", getMotivoTraslado()=" + getMotivoTraslado() + ", getLogin()=" + getLogin()
+				+ ", getPersonaAnteriorBenf()=" + getPersonaAnteriorBenf() + ", getPersonaNuevoBenf()="
+				+ getPersonaNuevoBenf() + ", getRegistroKit()=" + getRegistroKit() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
 	
 }

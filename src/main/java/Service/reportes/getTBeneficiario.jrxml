@@ -28,10 +28,11 @@ WHERE ic.idregistroKit=rk.idregistroKit AND ic.idcil=cil.idcil AND cil.idmarccil
 	<parameter name="telefonosAB_param" class="java.lang.String"/>
 	<parameter name="telefonosNB_param" class="java.lang.String"/>
 	<parameter name="tramitador_param" class="java.lang.String"/>
+	<parameter name="escudo_param" class="java.io.InputStream"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT tb.fechaTraslado,os.numords,s.numSolt,s.fechaCreacion as fechaSolt,concat(p.ap,' ',p.am,' ',p.nombres) as nombreBA,p.ci as ciBA,p.direccion as direccionBA,p.email as emailBA,b.institucion as institucionBA, concat(per.ap,' ',per.am,' ',per.nombres) as nombreBN ,per.ci as ciBN,per.direccion as direccionBN,per.email as emailBN,ben.institucion as institucionBN,veh.placa,mV.nombre as marcVeh,tpV.nombre as tipVeh,tpMV.nombre as sistemaMotor,veh.num_motor,veh.cilindrada,rk.fechaConversion,rk.fechaInstalacion,rk.numSerieRegulador as serieRegulador,red.tipoTecnologia,mRed.nombre as marcaRed,sv.precioTotal as costoConversion
 FROM trasladoBeneficiario tb JOIN solicitud s ON tb.idsolt=s.idsolt JOIN beneficiario b ON b.idben=tb.idbenActual JOIN persona p ON p.idper=b.idper JOIN ordenServicio os ON os.idsolt=s.idsolt 
-JOIN benVehSolt bvs ON bvs.idsolt=s.idsolt JOIN vehiculo veh on bvs.placa=veh.placa JOIN marcaVehiculo mV ON veh.idmarcv=mV.idmarcv JOIN tipoVehiculo tpV ON veh.idtipv=tpV.idtipv JOIN tipoMotorVehiculo tpMV ON veh.idtipoMotorVeh=tpMV.idtipoMotorVeh  JOIN beneficiario ben ON bvs.idben=ben.idben AND ben.estado=1 JOIN persona per ON ben.idper=per.idper 
+JOIN benVehSolt bvs ON bvs.idsolt=s.idsolt JOIN vehiculo veh on bvs.placa=veh.placa JOIN marcaVehiculo mV ON veh.idmarcv=mV.idmarcv JOIN tipoVehiculo tpV ON veh.idtipv=tpV.idtipv JOIN tipoMotorVehiculo tpMV ON veh.idtipoMotorVeh=tpMV.idtipoMotorVeh  JOIN beneficiario ben ON bvs.idben=ben.idben AND tb.idbenNuevo=bvs.idben  JOIN persona per ON ben.idper=per.idper 
 JOIN registroKit rk ON rk.idordserv=os.idordserv JOIN reductor red ON rk.idreduc=red.idreduc JOIN marcaReductor mRed ON mRed.idmarcred=red.idmarcred JOIN servicio sv ON sv.idserv=os.idserv 
 WHERE tb.idtrasl=$P{idTrasl_param}]]>
 	</queryString>
@@ -148,10 +149,14 @@ WHERE tb.idtrasl=$P{idTrasl_param}]]>
 				<text><![CDATA[Fecha de Traslado:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="460" y="24" width="110" height="16" uuid="9ed3521c-f6d7-4a09-95a5-7a7fa39f9765"/>
+				<reportElement x="470" y="24" width="100" height="16" uuid="9ed3521c-f6d7-4a09-95a5-7a7fa39f9765"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{fechaTraslado}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="13" y="5" width="77" height="67" uuid="cdbe955f-7834-486c-945b-ba2d9aa37108"/>
+				<imageExpression><![CDATA[$P{escudo_param}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

@@ -48,6 +48,7 @@ public class RestTBeneficiarios {
 	@RequestMapping(value="listar")
 	public ResponseEntity<List<TransferenciaBeneficiario>> listarTBneneficiarios(HttpServletRequest req,HttpServletResponse res){	
 		List<TransferenciaBeneficiario> Tbeneficiarios=this.manejadorBeneficiarios.ListaTB(req);
+		System.out.println("Tbeneficiarios: "+Tbeneficiarios);
 		for (int i = 0; i < Tbeneficiarios.size(); i++) {
 			Tbeneficiarios.get(i).setRegistroKit(this.manejadorInstalacionKit.getRegistroKitTB(Tbeneficiarios.get(i).getIdsolt()));
 			Tbeneficiarios.get(i).getRegistroKit().setOrdenServicio(this.manejadorServicios.getOrdenServicioIK(Tbeneficiarios.get(i).getRegistroKit().getIdordserv()));
@@ -93,8 +94,6 @@ public class RestTBeneficiarios {
 		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		String[] documentos=req.getParameterValues("documentos[]");
 		String[] telefonos=req.getParameterValues("telefono[]");
-		//System.out.println("tamañoDocArray: "+documentos.length);
-		//System.out.println("TelefonosArray: "+telefonos.length);
 		Map<String, Object> respuesta=new HashMap<String, Object>();
 		for (String i : documentos) {
 			System.out.println("coddocb: "+i);
@@ -103,9 +102,9 @@ public class RestTBeneficiarios {
 			System.out.println("telefonos: "+i);
 		}
 		try {
-			boolean consulta=this.manejadorBeneficiarios.registrarTB(req,documentos,telefonos,xuser);
-//			System.out.println(consulta);
-			respuesta.put("estado", consulta);
+			Object[] consulta=this.manejadorBeneficiarios.registrarTB(req,documentos,telefonos,xuser);
+			respuesta.put("estado", consulta[0]);
+			respuesta.put("idtrasl",Integer.parseInt(consulta[1].toString()));
 		} catch (Exception e) {
 			// TODO: handle exception
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -136,7 +135,7 @@ public class RestTBeneficiarios {
 	@RequestMapping("Imprimir")
 	public  void Imprimir(HttpServletResponse res,HttpServletRequest req){
 		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
-		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
+		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();    
 		String id=req.getParameter("idtrasl");
 		System.out.println("idTrasl: "+id);
 		
@@ -162,7 +161,7 @@ public class RestTBeneficiarios {
 		 
 		
 		
-		List<Telefono> ListaTelfNB=this.manejadorBeneficiarios.ListaTelf_TB(tb.getRegistroKit().getOrdenServicio().getSolicitud().getPersona().getIdper());
+		List<Telefono> ListaTelfNB=this.manejadorBeneficiarios.ListaTelf_TB(tb.getPersonaNuevoBenf().getIdper());
 		System.out.println("ListaTelfNB: "+ListaTelfNB.toString());
 		for (int i = 0; i < ListaTelfNB.size(); i++) {
 			System.out.println("ListaTelfNB: "+ListaTelfNB.get(i));
@@ -170,11 +169,11 @@ public class RestTBeneficiarios {
 		}
 		ListaTelefonosNB=ListaTelefonosNB.trim().replaceAll(" ","-");
 		System.out.println("ListaTelefonosNB: "+ListaTelefonosNB);
-		
+	 	 
 	
 		  
-		String escudo="/Service/reportes/escudoGobernacion.png";        
-		String nombreReporte="Acta de Recepcion",tipo="pdf", estado="inline";
+		String escudo="/Service/reportes/escudobolivia.png";        
+		String nombreReporte="TRANSFERENCIA BENEFICIARIO",tipo="pdf", estado="inline";
 		System.out.println("escudo: "+this.getClass().getResourceAsStream(escudo));
 		      
 		Map<String, Object> parametros=new HashMap<String, Object>();         
@@ -184,7 +183,7 @@ public class RestTBeneficiarios {
 		parametros.put("telefonosAB_param",ListaTelefonosAB);
 		parametros.put("telefonosNB_param",ListaTelefonosNB);
 		parametros.put("tramitador_param",Tramitador);
-		//parametros.put("escudo_param",this.getClass().getResourceAsStream(escudo));
+		parametros.put("escudo_param",this.getClass().getResourceAsStream(escudo));
 		GeneradorReportes g=new GeneradorReportes();
 		try{
 			g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	

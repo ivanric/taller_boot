@@ -158,10 +158,10 @@
                     $('td',row).eq(2).html(data.registroKit.ordenServicio.solicitud.numSolt)
                     $('td',row).eq(3).html(data.registroKit.ordenServicio.solicitud.vehiculo.placa)
                     $('td',row).eq(4).html(data.personaAnteriorBenf.ap+' '+data.personaAnteriorBenf.am+' '+data.personaAnteriorBenf.nombres)
-                    $('td',row).eq(5).html(data.registroKit.ordenServicio.solicitud.persona.ap+' '+data.registroKit.ordenServicio.solicitud.persona.am+' '+data.registroKit.ordenServicio.solicitud.persona.nombres)
-                    $('td',row).eq(6).html(data.registroKit.ordenServicio.solicitud.persona.ci)
-                    $('td',row).eq(7).html(data.registroKit.ordenServicio.solicitud.persona.direccion)
-                    if(data.registroKit.ordenServicio.solicitud.persona.beneficiario.estado==1){
+                    $('td',row).eq(5).html(data.personaNuevoBenf.ap+' '+data.personaNuevoBenf.am+' '+data.personaNuevoBenf.nombres)
+                    $('td',row).eq(6).html(data.personaNuevoBenf.ci)
+                    $('td',row).eq(7).html(data.personaNuevoBenf.direccion)
+                    if(data.personaNuevoBenf.beneficiario.estado==1){
                         $('td',row).eq(8).html('<button type="button" class="btn btn-success waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></button>').addClass('text-center').addClass('text-center');
                     }else{
                         $('td',row).eq(8).html('<button type="button" class="btn btn-danger waves-effect" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></button>').addClass('text-center').addClass('text-center');
@@ -418,6 +418,9 @@
                                                                 showConfirmButton: false 
                                                             });
                                                             $('#modal-add').modal('hide')
+                                                            var idT=res.idtrasl;
+                                                              $("#frameReportes").attr("src",'../RestTBeneficiarios/Imprimir?idtrasl='+idT);
+                                                              $("#reportes").modal('show'); 
                                                         }
                                                     })      
                                                 }
