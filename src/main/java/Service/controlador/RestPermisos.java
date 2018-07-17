@@ -71,7 +71,7 @@ public class RestPermisos {
 		int idProc=Integer.parseInt(req.getParameter("idProc"));
 		System.out.println("idProc: "+idProc);
 		List<List<?>> lista=new ArrayList<>(); 
-		List<Opcion> Opciones=this.manejadorRoles.ListaOpciones();
+		List<Opcion> Opciones=this.manejadorRoles.ListaOpcionesByIdproc(idProc);
 		List<Opcion> ProcOpc=this.manejadorRoles.ListaOpcProc(idRol,idMod,idProc);
 		lista.add(Opciones);
 		lista.add(ProcOpc);

@@ -98,8 +98,13 @@ public class ManejadorRoles{
 		return this.db.query(sql,new objProceso());
 	}
 	public List<Opcion> ListaOpciones(){
-		String sql="select * from opcion  where estado=1";
+		String sql="select * from opcion where  estado=1 ";
 		return this.db.query(sql,new objOpcion());
+	}
+	public List<Opcion> ListaOpcionesByIdproc(int idproc){
+		System.out.println("idProc: "+idproc);
+		String sql="select o.* from opcion o ,procopc po,proceso pc  where  o.idopc=po.idopc AND pc.idproc=po.idproc and o.estado=1 AND pc.idproc=?";
+		return this.db.query(sql,new objOpcion(),idproc);
 	}
 	public List<Modulo> ListaMenuRol(int codr){
 		String sql="select DISTINCT m.* from modulo m,permiso p  where p.idmod=m.idmod and p.idrol=?";

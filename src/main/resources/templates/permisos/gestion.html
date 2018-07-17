@@ -102,34 +102,6 @@
 						`)		
 					})
 					$('#js_selectRol').trigger('chosen:updated');
-
-					// $(data[1]).each(function(i,m){
-					// 	$('.table-menus tbody').append(`
-	    //                     <tr>
-	    //                         <td>${m.idmod}</td>
-	    //                         <td>${m.nombre}</td>
-	    //                         <td><input type="checkbox" name="" value="${m.idmod}" disabled></td>
-	    //                     </tr>          
-	    //                 `) 
-					// })
-					// $(data[2]).each(function(i,m){
-					// 	$('.table-procesos tbody').append(`
-	    //                     <tr>
-	    //                         <td>${m.idproc}</td>
-	    //                         <td>${m.nombre}</td>
-	    //                         <td><input type="checkbox" name="" value="${m.idproc}" disabled></td>
-	    //                     </tr>          
-	    //                 `) 
-					// })
-					// $(data[3]).each(function(i,m){
-					// 	$('.table-opciones tbody').append(`
-	    //                     <tr>
-	    //                         <td>${m.idopc}</td>
-	    //                         <td>${m.nombre}</td>
-	    //                         <td><input type="checkbox" name="" value="${m.idopc}" disabled></td>
-	    //                     </tr>          
-	    //                 `) 
-					// })
 				})	
 			}
 
@@ -146,12 +118,6 @@
 					idRol=codRol;
 					$.getJSON('../RestPermisos/dataMenus',{idrol:codRol},function(resp){
 						console.log('respMenus: ',resp);
-					   // if ($.fn.DataTable.isDataTable('.table-menus')) {
-				       //              DTMenus.destroy();
-				       //              iniciarDatableMenu(resp[0],resp[1]);       
-				       //          } else {
-				       //              iniciarDatableMenu(resp[0],resp[1]);
-				       //          } 
 
 						$(resp[0]).each(function(i,m){
 							var check="";
