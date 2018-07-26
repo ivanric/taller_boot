@@ -9,8 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class controller {
 	@RequestMapping(value = "/index")
 	public ModelAndView home(Model model) {
-		System.out.println("INICIA");
-//		model.addAttribute("Hello", "Hola Mundo Velocity");
+		System.out.println("INICIA APP");
 		return new ModelAndView("index");
 	}
 }

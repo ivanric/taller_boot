@@ -23,6 +23,11 @@
         <link rel="stylesheet" href="../../static/bower_components/bootstrap-select/dist/css/bootstrap-select.css" th:href="@{/bower_components/bootstrap-select/dist/css/bootstrap-select.css}"/>
         <link rel="stylesheet" href="../../static/bower_components/bootstrap-sweetalert/dist/sweetalert.css" th:href="@{/bower_components/bootstrap-sweetalert/dist/sweetalert.css}"/>
         <link rel="stylesheet" href="../../static/bower_components/growl/stylesheets/jquery.growl.css" th:href="@{/bower_components/growl/stylesheets/jquery.growl.css}"/>
+
+        <link rel="stylesheet" href="../../static/bower_components/bootstrap-fileinput/css/fileinput.css" th:href="@{/bower_components/bootstrap-fileinput/css/fileinput.css}"/>
+
+
+
        
 		<link rel="stylesheet" href="../../static/css/styles.css" th:href="@{/css/styles.css}"/>
 		<link rel="stylesheet" href="../../static/css/reloj.css" th:href="@{/css/reloj.css}"/>
@@ -139,6 +144,7 @@
     </div>
 	
 
+	<div id="cont-modales"></div>
 	
 	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="reportes" aria-hidden="true">
 	  <div class="modal-dialog modal-lg" style="width: 90%">
@@ -157,7 +163,7 @@
     </footer>
     
     
-    
+
     
     
     <script type="" src="../../static/bower_components/jquery/dist/jquery.js" th:src="@{/bower_components/jquery/dist/jquery.js}"></script>
@@ -180,8 +186,12 @@
     <script src="../../static/bower_components/growl/javascripts/jquery.growl.js" th:src="@{/bower_components/growl/javascripts/jquery.growl.js}"></script>
     <script src="../../static/bower_components/bootstrap-growl/jquery.bootstrap-growl.min.js" th:src="@{/bower_components/bootstrap-growl/jquery.bootstrap-growl.min.js}"></script>
     <script type="" src="../../static/bower_components/jquery-load-json/dist/jquery.loadJSON.min.js" th:src="@{/bower_components/jquery-load-json/dist/jquery.loadJSON.min.js}"></script> 
+
+    <script type="" src="../../static/bower_components/bootstrap-fileinput/js/fileinput.js" th:src="@{/bower_components/bootstrap-fileinput/js/fileinput.js}"></script> 
+	<script type="" src="../../static/bower_components/bootstrap-fileinput/js/locales/es.js" th:src="@{/bower_components/bootstrap-fileinput/js/locales/es.js}"></script> 
+
     <script type="" src="../../static/js/tema/js/functions.js" th:src="@{/js/tema/js/functions.js}"></script>
-<!--     <script type="" src="../js/reloj.js"></script> -->
+    <script type="" src="../../static/js/fileinput/fileinput.min.js" th:src="@{/js/fileinput/fileinput.min.js}"></script>
     <script type="" src="../../static/js/ajax/GBeneficiarios.js" th:src="@{/js/ajax/GBeneficiarios.js}"></script>
     
     <script type="text/javascript">
@@ -446,7 +456,6 @@
 	    setTimeout("mueveReloj()",1000)
 	} 
 	</script>
-	<div id="cont-modales"></div>
 	
     </body> 	
 

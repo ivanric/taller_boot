@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="../../static/bower_components/bootstrap/dist/css/bootstrap.css" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.css}"/>
     <!-- <link rel="stylesheet" href="../css/tema/materialize.css"/> -->
     <!-- <link rel="stylesheet" href="../css/tema/style.css"/> -->
@@ -20,6 +21,14 @@
     <link rel="stylesheet" href="../../static/bower_components/growl/stylesheets/jquery.growl.css" th:href="@{/bower_components/growl/stylesheets/jquery.growl.css}"/>
 
     <link rel="stylesheet" href="../../static/bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" th:href="@{/bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css}"/>
+    
+    <link rel="stylesheet" href="../../static/bower_components/bootstrap-fileinput/css/fileinput.css" th:href="@{/bower_components/bootstrap-fileinput/css/fileinput.css}"/>
+    <!-- <link rel="" href="../../static/bower_components/bootstrap-material-design/scss/bootstrap-material-design.scss" th:href="@{/bower_components/bootstrap-material-design/scss/bootstrap-material-design.scss}"/> -->
+
+
+<!--     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
 
    
 
@@ -36,1044 +45,180 @@
 	</style>
 </head>
 <body>
+<button type="button" class="btn btn-raised btn-primary">Primary</button>
+<button type="button" class="btn btn-raised btn-secondary">Secondary</button>
+<form id="formulario-add" action="../RestBeneficiarios/adicionar" method="post" 
+    data-fv-excluded="disabled">
 
-<!-- 	<form id="formulario-add" action="../RestActaRecepcion/adicionar" method="post" 
-	    data-fv-excluded="disabled">
-
-	    <div class="" id="modal-add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="">
-	       <div class="modal-dialog modal-lg" role="document">
-	         <div class="modal-content">
-	            <div class="card">
-	                <div class="card-header">
-	                    <button type="button" class="close" data-dismiss="modal"
-	                        aria-label="Close">
-	                        <span aria-hidden="true">&times;</span>
-	                    </button>
-	                    <div class="row">
-	                        <div class="col-md-5">
-	                            <h2>NUEVA TRANSFERENCIA BENEFICIARIO<small>Complete los campos por favor</small></h2>
-	                        </div>
-	                        <div class="col-md-7">
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="modal-body">
-	                     <div class="row">
-	                        <div class="col-md-2"></div>
-	                        <div class="col-md-8">
-	                            <div class="fg-line div_busca" id="" style="text-align: center !important;">
-	                                <b>Buscar por: Nro. de Solicitud / Cédula </b><br>
-	                                <div class="form-group" style="margin-bottom: 0 !important">
-	                                    <input type="text" style="width: 100%;margin: auto;" name="buscar_datos" id="js-busca" class="form-control_filtro unput-sm" placeholder="Ingrese número de Solicitud o CI" autocomplete="off" data-fv-notempty="true" data-fv-message="Seleccionar porfavor">
-	                                    
-	                                </div>
-	                                <input type="hidden" name="idsol">
-	                                <div id="display"  class="lista_ben z-depth-3" style="width: 100%;border-radius: 2px;margin: auto;">
-	                                   <table width="100%"  class="table table-hover table-vmiddle  table-striped nowrap" id="js_table_filtro">
-	                                       <thead>
-	                                           <tr>
-	                                               <th width=""># OrdServ</th>
-	                                               <th width=""># Solt</th>
-	                                               <th width="">Placa</th>
-	                                               <th>Beneficiario</th>
-	                                               <th>Cedula</th>
-	                                           </tr>
-	                                       </thead>
-	                                       <tbody>
-	                                            
-	                                       </tbody>
-	                                   </table>
-	                                </div>  
-	                            </div> 
-	                        </div>
-	                        <div class="col-md-2"></div>
-	                     </div>  
-
-	                    <fieldset>
-	                        <legend><strong>DATOS BÁSICOS</strong>
-	                        </legend>
-	                        <div class="row" id="js_DatosBasicos">
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-6 control-label"><b>Número de Orden Servicio:</b></label>
-	                                    <div class="col-md-6">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="numOrdServ"> </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-6 control-label"><b>Fecha de Orden Servicio:</b></label>
-	                                    <div class="col-md-6">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="fechaOrdServ"> </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-6 control-label"><b>Número de  Solicitud:</b></label>
-	                                    <div class="col-md-6">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="numSolt"> </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-6 control-label"><b>Fecha Solicitud:</b></label>
-	                                    <div class="col-md-6">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="fechaOrdServ"> </div>
-	                                    </div>
-	                                </div>
-	                            </div>
+    <div class="" id="modal-add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="">
+       <div class="modal-dialog modal-md" role="document">
+         <div class="modal-content">
+            <div class="card">
+                <div class="card-header my-card-padding">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2>Adicionar Beneficiario<small>Complete el formulario por favor</small></h2>
+                </div>
+                <div class="modal-body">                      
+                    <div class="row">
+                    <!--<div class="col-md-6">
+                            <p class="f-500 c-black m-b-20">Fotografia Usuario</p>
+                            <div class="fileinput fileinput-new form-group" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                                <div>
+                                    <span class="btn btn-info btn-file">
+                                        <span class="fileinput-new">Seleccione Imagen</span>
+                                        <span class="fileinput-exists">Cambiar</span>
+                                        <input class="" type="file" name="..." maxlength="100" data-fv-stringlength-message="">
+                                    </span>
+                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Borrar</a>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            <label for="" class=""><b>Fotografía de Usuario</b></label>
+                            <input class="file"  maxlength="8" data-fv-stringlength-message="" id="fotografia" name="foto" type="file">
+                            
+                        </div>
+                    </div> 
+                    <br><br>
+                    <fieldset>
+                        <legend><b>DATOS LOGUEO</b></legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input" name="usuario" type="text" data-fv-notempty="true" data-fv-message="Requiere Nombres"  maxlength="12" data-fv-stringlength-message="Solo 12 caracteres">
+                                    </div>
+                                    <label class="fg-label">Nombre de Usuario</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input" name="password" type="password" value="12345" maxlength="20" data-fv-stringlength-message="Solo 20 caracteres">
+                                    </div>
+                                    <label class="fg-label">Contraseña de Usuario</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend><b>DATOS GENERALES</b></legend>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input" minlength="7" maxlength="8" data-fv-stringlength-message="La Cedula debe ser entre 7 u 8 caracteres" id="cedula" name="ci" type="text"  data-fv-notempty="true" data-fv-message="Requiere Cedula" data-fv-integer="true" data-fv-integer-message="El valor de este campo debe ser numerico y sin espacios en blanco">
+                                    </div>
+                                    <label class="fg-label">Cedula</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <select data-placeholder="n" name="ciCod" class="form-control" data-fv-notempty='true' data-fv-message="Requiere Ciudadania" id="ciCod">
+                                            <option value="TJ">TJ</option>
+                                            <option value="PT">PT</option>
+                                            <option value="PA">PA</option>
+                                            <option value="LP">LP</option>
+                                            <option value="OR">OR</option>
+                                            <option value="CB">CB</option>
+                                            <option value="BN">BN</option>
+                                            <option value="CH">CH</option>
+                                            <option value="SC">SC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input" name="nombres" type="text" data-fv-notempty="true" data-fv-message="Requiere Nombres"  maxlength="12" data-fv-stringlength-message="Solo 12 caracteres">
+                                    </div>
+                                    <label class="fg-label">Nombres</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input" maxlength="12" name="ap" type="text" data-fv-notempty="true" data-fv-message="Requiere Apellido Paterno" data-fv-stringlength-message="Solo 12 caracteres">
+                                    </div>
+                                    <label class="fg-label">Apellido Paterno</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input" maxlength="12" name="am" type="text"  data-fv-stringlength-message="Solo 12 caracteres">
+                                    </div>
+                                    <label class="fg-label">Apellido Materno</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <select data-placeholder="n" name="genero" class="form-control" data-fv-notempty='true' data-fv-message="Requiere Género" id="select-genero">
+                                            <option value="">Seleccione Género</option>
+                                            <option value="m">Masculino</option>
+                                            <option value="f">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input class="form-control fg-input"  name="direccion" type="text" data-fv-notempty="true" data-fv-message="Requiere Dirección" maxlength="40">
+                                    </div>
+                                    <label class="fg-label">Dirección</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="" class="col-md-6 control-label"><b>Taller:</b></label>
-                                        <div class="col-md-6">
-                                            <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="nombreTaller"></div>
+                                    <div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <input class="form-control fg-input"  name="email" type="email" maxlength='40'>
                                         </div>
-                                    </div>
+                                        <label class="fg-label">Correo</label>
+                                    </div>    
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="" class="col-md-6 control-label"><b>Dirección Taller:</b></label>
-                                        <div class="col-md-6">
-                                            <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="direccion"></div>
-                                        </div>
-                                    </div>
-                                </div>
-	 
-	                        </div>
-	                    </fieldset>
-						<fieldset>
-							<legend><strong>BENEFICIARIO ACTUAL</strong></legend>
-							
-							<div class="row">
-							    <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Cédula:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="ci"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Nombres:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="nombres"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Apellido Paterno:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="ap"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Apellido Materno:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="am"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Dirección:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="placa"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Email:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="color"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                           <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Institución:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="placa"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Telefonos:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="color"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-								
-							</div>
-						</fieldset>	
-	                    <fieldset>
-	                        <legend><strong>VEHÍCULO</strong></legend>
-	                        <div class="row" id="js_Vehiculo">
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Placa:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="placa"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Color:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="color"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Marca:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="marca"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Modelo:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="modelo"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Tipo Vehiculo:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tipoVeh"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Tipo Servicio:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tipServ"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Sistema Motor:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="SistemaMotor"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Num. Motor:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="num_motor"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Num. Chasis:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="num_chasis"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Targta. Prioridad:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tjeta_prioridad"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Cilindrada:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="cilindrada"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                      	
-	                        </div>              
-	                    </fieldset>
-	                    <fieldset>
-	                    	<legend><strong>DATOS DE CONVERSION</strong></legend>
-	                    		<div class="row">
-		              				<div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Fecha Conversión:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="fechaConversion" disabled="disabled"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		             				<div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Fecha Instalacón:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="fechaInstalación" disabled="disabled"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-	                    			<h3 style="text-align: center;"><b><ins>REDUCTOR (REGULADOR)</ins></b></h3>
-								</div>
-	                    		<div class="row">
-	                                <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Tipo Tecnología:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tipoTecnologia" disabled="disabled"> </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-	                                <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Marca Regulador:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="marcaReductor" disabled="disabled"> </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-
-								</div>
-								<div class="row">
-		              				<div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Serie Regulador:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="serieRegulador" disabled="disabled"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		              				<div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Certificado Regulador:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="certificadoKit" disabled="disabled"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-								</div>
-									<h3 style="text-align: center; margin-top: 0px"><b><ins>CILINDROS</ins></b></h3>
-	                    		<div class="row">
-	                    			<div class="col-xs-2"></div>
-	                    			<div class="col-md-8">
-	                    				<div class="js-clindros"></div>
-	                    			</div>
-	                    		</div>
-	                    </fieldset>
-	  					<fieldset>
-	  						<legend><strong>BENEFICIARIO NUEVO</strong></legend>
-							<div class="row">
-							    <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Cédula:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="ci"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Nombres:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="nombres"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Apellido Paterno:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="ap"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Apellido Materno:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="am"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-								<div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="" class="col-md-6 control-label"><b>Género:</b></label>
-                                        <div class="col-md-6">
-											<label class="radio-inline">
-                                              <input type="radio" style="margin-top: 1px;" id=""  value="1" name="genero" data-fv-notempty="true" data-fv-message="Requiere Genero"> SI
-                                            </label>
-                                            <label class="radio-inline">
-                                              <input type="radio" style="margin-top: 1px;" id=""  value="0" name="genero" data-fv-notempty="true" data-fv-message="Requiere Genero"> NO
-                                            </label> 
-                                        </div>
-                                    </div>
-                                </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Dirección:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="placa"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Correo:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="color"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                           <div class="col-md-6">
-	                                <div class="form-group">
-	                                    <label for="" class="col-md-4 control-label"><b>Institución:</b></label>
-	                                    <div class="col-md-8">
-	                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="placa"></div>
-	                                    </div>
-	                                </div>
-	                            </div>
-
-								
-							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-12">
-									
-									<div class="form-group">
-								        <label class="col-xs-3 control-label"><b>Telefonos/Celulares</b></label>
-								        <div class="col-xs-5">
-								            <input type="text"  class="form-control" name="telefono[]" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
-								        </div>
-								        <div class="col-xs-4">
-								            <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-								        </div>
-								    </div>
-								
-								    <div class="form-group hide" id="optionTemplate" >
-								        <div class="col-xs-offset-3 col-xs-5">
-								            <input class="form-control" type="text" name="" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
-								        </div>
-								        <div class="col-xs-4">
-								            <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-								        </div>
-								    </div>
-								</div>
-							</div>
-							<br>
-		                    <div class="row">
-		                        <div class="col-md-12">
-		                            <div class="form-group">
-		                            	<label class="col-md-3 control-label"><b>Documentos Presentados</b></label>
-		                            	<div class="col-md-7" id="js_doc">
-		    
-		                            	</div>                        
-		                            </div>
-
-		                        </div>
-                 		    </div> 
-	  					</fieldset>	
-
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="submit" id="btn-guardar-aprob"
-	                        class="btn btn-primary waves-effect">Guardar</button>
-	                    <button type="button" class="btn btn-danger waves-effect"
-	                        data-dismiss="modal">Cancelar</button>
-	                </div>
-	            </div>
-	          </div>
-	        </div>
-	    </div>
-	</form>  
-
-	<form id="formulario-ver" action="#"
-		method="post" data-fv-excluded="disabled"
-		>
-		<div class="" id="modal-ver" tabindex="-1" role="dialog"
-			data-backdrop="static" data-keyboard="false" 
-			style="">
-			<div class="modal-dialog modal-lg" role="document"
-				style="width: 70%;">
-				<div class="modal-content">
-					<div class="card">
-						<div class="card-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							
-							<div class="row">
-								<div class="col-md-4">
-		                           	<h2>TRASNFERENCIA BENEFICIARIO<small>Datos de Transferencia Beneficiario</small></h2>
-		                        </div>
-							</div>
-						</div>
-						<div class="modal-body">
-		                    <fieldset>
-		                        <legend><strong>DATOS BÁSICOS</strong>
-		                        </legend>
-		                        <div class="row" id="js_DatosBasicos">
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Número de Orden Servicio:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="numOrdServ"> </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Fecha de Orden Servicio:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="fechaOrdServ"> </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Número de  Solicitud:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="numSolt"> </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-6 control-label"><b>Fecha Solicitud:</b></label>
-		                                    <div class="col-md-6">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="fechaSolt"> </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </fieldset>
-							<fieldset>
-								<legend><strong>BENEFICIARIO ACTUAL</strong></legend>
-								
-								<div class="row">
-								    <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Cédula:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="ci"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Nombres:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="nombres"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Apellido Paterno:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="ap"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Apellido Materno:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="am"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Dirección:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="direccion"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Email:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="email"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                           <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Institución:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="Institucion"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Telefonos:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="telefonos"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-									
-								</div>
-							</fieldset>	
-		                    <fieldset>
-		                        <legend><strong>VEHÍCULO</strong></legend>
-		                        <div class="row" id="js_Vehiculo">
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Placa:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="placa"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Color:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="color"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Marca:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="marca"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Modelo:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="modelo"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Tipo Vehiculo:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tipoVeh"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Tipo Servicio:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tipServ"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Sistema Motor:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="SistemaMotor"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Num. Motor:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="num_motor"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Num. Chasis:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="num_chasis"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Targta. Prioridad:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tjeta_prioridad"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Cilindrada:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="cilindrada"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                      	
-		                        </div>              
-		                    </fieldset>
-		                    <fieldset>
-		                    	<legend><strong>DATOS DE CONVERSION</strong></legend>
-		                    		<div class="row">
-			              				<div class="col-md-6">
-			                                <div class="form-group">
-			                                    <label for="" class="col-md-6 control-label"><b>Fecha Conversión:</b></label>
-			                                    <div class="col-md-6">
-			                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="fechaConversion" disabled="disabled"></div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			             				<div class="col-md-6">
-			                                <div class="form-group">
-			                                    <label for="" class="col-md-6 control-label"><b>Fecha Instalacón:</b></label>
-			                                    <div class="col-md-6">
-			                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="fechaInstalación" disabled="disabled"></div>
-			                                    </div>
-			                                </div>
-			                            </div>
-		                    			<h3 style="text-align: center;"><b><ins>REDUCTOR (REGULADOR)</ins></b></h3>
-									</div>
-		                    		<div class="row">
-		                                <div class="col-md-6">
-			                                <div class="form-group">
-			                                    <label for="" class="col-md-6 control-label"><b>Tipo Tecnología:</b></label>
-			                                    <div class="col-md-6">
-			                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="tipoTecnologia" disabled="disabled"> </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-		                                <div class="col-md-6">
-			                                <div class="form-group">
-			                                    <label for="" class="col-md-6 control-label"><b>Marca Regulador:</b></label>
-			                                    <div class="col-md-6">
-			                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="marcaReductor" disabled="disabled"> </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-
-									</div>
-									<div class="row">
-			              				<div class="col-md-6">
-			                                <div class="form-group">
-			                                    <label for="" class="col-md-6 control-label"><b>Serie Regulador:</b></label>
-			                                    <div class="col-md-6">
-			                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="serieRegulador" disabled="disabled"></div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			              				<div class="col-md-6">
-			                                <div class="form-group">
-			                                    <label for="" class="col-md-6 control-label"><b>Certificado Regulador:</b></label>
-			                                    <div class="col-md-6">
-			                                        <div class="fg-line"><input type="text" class="form-control mcss_input"  name="certificadoKit" disabled="disabled"></div>
-			                                    </div>
-			                                </div>
-			                            </div>
-									</div>
-										<h3 style="text-align: center; margin-top: 0px"><b><ins>CILINDROS</ins></b></h3>
-		                    		<div class="row">
-		                    			<div class="col-xs-2"></div>
-		                    			<div class="col-md-8">
-		                    				<div class="js-clindros"></div>
-		                    			</div>
-		                    		</div>
-		                    </fieldset>
-							<fieldset>
-								<legend><strong>BENEFICIARIO NUEVO</strong></legend>
-								
-								<div class="row">
-								    <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Cédula:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="ci"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Nombres:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="nombres"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Apellido Paterno:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="ap"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Apellido Materno:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="am"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Dirección:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="direccion"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Email:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="email"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                           <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Institución:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" class="form-control mcss_input" disabled="disabled" name="Institucion"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="form-group">
-		                                    <label for="" class="col-md-4 control-label"><b>Telefonos:</b></label>
-		                                    <div class="col-md-8">
-		                                        <div class="fg-line"><input type="text" value="" class="form-control mcss_input" disabled="disabled" name="telefonos"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-									
-								</div>
-			                    <div class="row">
-			                        <div class="col-md-12">
-			                            <div class="form-group">
-			                            	<label class="col-md-3 control-label"><b>Documentos Presentados</b></label>
-			                            	<div class="col-md-7" id="js_doc">
-			    
-			                            	</div>                        
-			                            </div>
-
-			                        </div>
-	                 		    </div>
-							</fieldset>	
-						</div>
-						<div class="modal-footer">
-							<button type="submit" id=""
-								class="btn btn-primary waves-effect">Imprimir</button>
-							<button type="button" class="btn btn-danger waves-effect"
-								data-dismiss="modal">Cancelar</button>
-						</div>
-					</div>
-				</div>
-			
-			</div>
-		</div>	
-	</form> -->
-	<form id="formulario-add" action="../RestRoles/adicionar"
-		method="post" data-fv-excluded="disabled"
-		>
-		<div class="" id="modal-add" tabindex="-1" role="dialog"
-			data-backdrop="static" data-keyboard="false" aria-hidden="true"
-			style="">
-			<div class="modal-dialog modal-md" role="document" style="">
-					<div class="modal-content">
-						<div class="card">
-							<div class="card-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-								<h2>
-									Nuevo Servicio<small>Llene los campos por favor</small>
-								</h2>
-							</div>
-							<div class="modal-body">
-	                            <fieldset>
-	                                <legend><strong>BENEFICIARIO NUEVO</strong></legend>
-	                                <div class="row">
-	                                    <div class="col-md-4">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-4 control-label"><b>Cédula:</b></label>
-	                                            <div class="col-md-8">
-	                                                <div class="fg-line"><input type="text" class="form-control mcss_input"  name="ciN" minlength="7" maxlength="8" data-fv-stringlength-message="La Cedula debe ser entre 7 u 8 caracteres" id="cedula"  data-fv-notempty="true" data-fv-message="Requiere Cedula" data-fv-integer="true" data-fv-integer-message="El valor de este campo debe ser numerico y sin espacios en blanco"></div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="col-md-2">
-	                                        <div class="form-group" style="margin-top: -10px;margin-bottom: 0;">
-	                                            <div class="fg-line">
-	                                                <select data-placeholder="n" name="ciCodN" class="form-control" data-fv-notempty='true' data-fv-message="Requiere Ciudadania" id="ciCod">
-	                                                    <!-- <option value="">SEL</option> -->
-	                                                    <option value="TJ">TJ</option>
-	                                                    <option value="PT">PT</option>
-	                                                    <option value="PA">PA</option>
-	                                                    <option value="LP">LP</option>
-	                                                    <option value="OR">OR</option>
-	                                                    <option value="CB">CB</option>
-	                                                    <option value="BN">BN</option>
-	                                                    <option value="CH">CH</option>
-	                                                    <option value="SC">SC</option>
-	                                                </select>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="col-md-6">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-4 control-label"><b>Nombres:</b></label>
-	                                            <div class="col-md-8">
-	                                                <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="nombresN" data-fv-notempty="true" data-fv-message="Requiere Nombres" maxlength="12" data-fv-stringlength-message="Solo 12 caracteres"></div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <div class="row">    
-	                                    <div class="col-md-6">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-4 control-label"><b>Ap. Patr:</b></label>
-	                                            <div class="col-md-8">
-	                                                <div class="fg-line"><input type="text" class="form-control mcss_input"  name="apN" data-fv-notempty="true" data-fv-message="Requiere Apellido Paterno" maxlength="12" data-fv-stringlength-message="Solo 12 caracteres"></div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="col-md-6">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-4 control-label"><b>Ap. Matr:</b></label>
-	                                            <div class="col-md-8">
-	                                                <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="amN" maxlength="12" data-fv-stringlength-message="Solo 12 caracteres"></div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="col-md-6">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-3 control-label"><b>Género:</b></label>
-	                                            <div class="col-md-9" style="margin-top: 4px;">
-	                                                <label class="radio-inline" style="margin-right: -12px;">
-	                                                  <input type="radio" style="margin-top: 1px;" id=""  value="m" name="generoN" data-fv-notempty="true" data-fv-message="Requiere Genero"> Masculino
-	                                                </label>
-	                                                <label class="radio-inline">
-	                                                  <input type="radio" style="margin-top: 1px;" id=""  value="f" name="generoN" data-fv-notempty="true" data-fv-message="Requiere Genero"> Femenino
-	                                                </label> 
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="col-md-6">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-4 control-label"><b>Dirección:</b></label>
-	                                            <div class="col-md-8">
-	                                                <div class="fg-line"><input type="text" class="form-control mcss_input"  name="direccionN" data-fv-notempty="true" data-fv-message="Requiere Dirección" maxlength="40"></div>
-	                                            </div>
-	                                        </div> 
-	                                    </div>
-	                                    <div class="col-md-6">
-	                                        <div class="form-group">
-	                                            <label for="" class="col-md-4 control-label"><b>Correo:</b></label>
-	                                            <div class="col-md-8">
-	                                                <div class="fg-line"><input type="text" value="" class="form-control mcss_input"  name="emailN" maxlength='40' data-fv-stringlength-message=''></div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <br>
-	                                <div class="row">
-	                                    <div class="col-md-12">
-	                                        <div class="form-group fg-float">
-	                                            <div class="col-md-12">
-	                                                <label class="control-label"><b>Descripcion</b></label>
-	                                                <div class="fg-line">
-	                                                    <textarea  class="form-control fg-input" id="text-desc" name="descripcionN" type="descripcion" maxlength="100"  data-fv-stringlength-message='' placeholder="Ingrese alguna descripcion o motivo">                                    
-	                                                    </textarea>
-	                                                </div>
-	                                                
-	                                            </div>
-	                                        </div>    
-	                                    </div>
-	                                </div>
-	                                <br>
-	                                <div class="row">
-	                                    <div class="col-md-12">
-	                                        
-	                                        <div class="form-group">
-	                                            <label class="col-xs-3 control-label"><b>Telefonos/Celulares</b></label>
-	                                            <div class="col-xs-5">
-	                                                <input type="text"  class="form-control" name="telefono[]" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
-	                                            </div>
-	                                            <div class="col-xs-4">
-	                                                <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-	                                            </div>
-	                                        </div>
-	                                    
-	                                        <div class="form-group hide" id="optionTemplate" >
-	                                            <div class="col-xs-offset-3 col-xs-5">
-	                                                <input class="form-control" type="text" name="" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
-	                                            </div>
-	                                            <div class="col-xs-4">
-	                                                <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <br>
-	                            </fieldset> 
-								<fieldset>
-									<legend><strong>TALLER</strong></legend>
-										<div class="row">
-											<div class="col-md-6">
-												<label for="" class="col-md-12 control-label espacio-form"><b>Nombre de Taller</b></label>
-												<div class="col-md-12">
-													<div class="form-group">
-														<div class="fg-line">
-															<input type="text" placeholder="ingrese nombre de taller" maxlength="50" data-fv-stringlength-message="Maximo 50 caracteres" class="form-control input-sm"  data-fv-notempty="true" data-fv-message="Campo Requerido" name="nombretall">
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<label for="" class="col-md-12 control-label espacio-form"><b>Dirección de Taller</b></label>
-												<div class="col-md-12">
-													<div class="form-group">
-														<div class="fg-line">
-															<input type="text" placeholder="ingrese nombre de taller" maxlength="50" data-fv-stringlength-message="Maximo 50 caracteres" class="form-control input-sm"  data-fv-notempty="true" data-fv-message="Campo Requerido" name="direcciontall">
-														</div>
-													</div>
-												</div>
-											</div>
-									
-										</div>
-								</fieldset>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" id="btn-guardar-aprob"
-									class="btn btn-primary waves-effect">Guardar</button>
-								<button type="button" class="btn btn-danger waves-effect"
-									data-dismiss="modal">Cancelar</button>
-							</div>
-
-						</div>
-					</div>
-			</div>
-		</div>
-	</form>
+                            </div>
+                        </div>
+                        <div class="row">
+    	                     <div class="form-group">
+    					        <label class="col-md-3 control-label">Telefonos/Celulares</label>
+    					        <div class="col-md-5">
+    					            <input type="text"  class="form-control" name="telefono[]" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
+    					        </div>
+    					        <div class="col-md-4">
+    					            <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+    					        </div>
+    					    </div>
+    					    <div class="form-group hide" id="optionTemplate" >
+    					        <div class="col-xs-offset-3 col-xs-5">
+    					            <input class="form-control" type="text" name="" placeholder="Ingrese número" maxlength="10" data-fv-integer="true" data-fv-integer-message="El campo debe ser numerico"/>
+    					        </div>
+    					        <div class="col-xs-4">
+    					            <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+    					        </div>
+    					    </div>
+                        </div>
+                    </fieldset>   
+					   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  id="btnAdicionarConfirmacion" class="btn btn-primary waves-effect"> Guardar</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"> Cancelar</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</form> 
 	<script type="" src="../../static/bower_components/jquery/dist/jquery.js" th:src="@{/bower_components/jquery/dist/jquery.js}"></script>
     <script type="" src="../../static/bower_components/bootstrap/dist/js/bootstrap.js" th:src="@{/bower_components/bootstrap/dist/js/bootstrap.js}"></script>
     <!-- <script type="" src="../bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script> -->
@@ -1095,118 +240,64 @@
     <script src="../../static/bower_components/bootstrap-growl/jquery.bootstrap-growl.min.js" th:src="@{/bower_components/bootstrap-growl/jquery.bootstrap-growl.min.js}"></script>
     <script type="" src="../../static/bower_components/jquery-load-json/dist/jquery.loadJSON.min.js" th:src="@{/bower_components/jquery-load-json/dist/jquery.loadJSON.min.js}"></script> 
     <script type="" src="../../static/bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js" th:src="@{/bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js}"></script> 
+    <script type="" src="../../static/bower_components/bootstrap-fileinput/js/fileinput.js" th:src="@{/bower_components/bootstrap-fileinput/js/fileinput.js}"></script> 
+   
+    <script type="" src="../../static/bower_components/bootstrap-fileinput/js/locales/es.js" th:src="@{/bower_components/bootstrap-fileinput/js/locales/es.js}"></script> 
+    <!-- <script type="" src="../../static/bower_components/bootstrap-material-design/js/bootstrapMaterialDesign.js" th:src="@{/bower_components/bootstrap-material-design/js/bootstrapMaterialDesign.js}"></script>  -->
 
+   <!--  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
 
     <script type="" src="../../static/js/tema/js/functions.js" th:src="@{/js/tema/js/functions.js}"></script>
-<!--     <script type="" src="../js/reloj.js"></script> -->
     <script type="" src="../../static/js/ajax/GBeneficiarios.js" th:src="@{/js/ajax/GBeneficiarios.js}"></script>
     <script src="../../static/js/myscript.js" th:src="@{/js/myscript.js}"></script>
+    <!-- <script type="" src="../../static/js/fileinput/fileinput.min.js" th:src="@{/js/fileinput/fileinput.min.js}"></script> -->
+  <!--   <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script> -->
     <script type="text/javascript">
-    	$('select').chosen();
-    	$('#example tbody').on('click','tr',function(){
-    		// alert('click')
-    		if ($(this).hasClass('selected')){
-            	$(this).removeClass('selected');
-	        }
-	        else {
-	            $('#example tr.selected').removeClass('selected');
-	            $(this).addClass('selected');
-	        }
-    		dato=$(this).find("td:eq(0)").text();
-    		console.log(dato);
-    		$('#result').html(dato)
-    	})
 
-    </script>
-    <script type="text/javascript">
-$(document).ready(function() {
-    var titleValidators = {
-            row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
-            validators: {
-                notEmpty: {
-                    message: 'The title is required'
-                }
-            }
-        },
-        isbnValidators = {
-            row: '.col-xs-4',
-            validators: {
-                notEmpty: {
-                    message: 'The ISBN is required'
-                },
-                // isbn: {
-                //     message: 'The ISBN is not valid'
-                // }
-            }
-        },
-        priceValidators = {
-            row: '.col-xs-2',
-            validators: {
-                notEmpty: {
-                    message: 'The price is required'
-                },
-                numeric: {
-                    message: 'The price must be a numeric number'
-                }
-            }
-        },
-        bookIndex = 0;
+    	var tipos = ['jpg','png','jpeg'];
+        iniciarFileInput();
+        function iniciarFileInput(){
+            $('#fotografia').fileinput({
+                language:'es',
+                showUpload: false,
+                showCaption: false,
+                showCancel: false,
+                allowedFileExtensions : tipos,
+                initialPreview: [
+                    '<img src="../../static/img/user.png" class="file-preview-image" alt="USER" title="USUARIO" width="200px;">',
+                ],
+                // initialPreviewConfig: [
+                //     {
+                //         caption: 'usuario.gif', 
+                //         // width: '120px', 
+                //         // url: 'http://localhost/avatar/delete',
+                //         // key: 100, 
+                //         // extra: {id: 100}
+                //     }
+                // ]
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "",
+                // browseLabel: "Buscar",
+                browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+                removeClass: "btn btn-danger",
+                removeLabel: "",
+                // removeLabel: "Quitar Imagen",
+                removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+                uploadClass: "btn btn-info",
+                // uploadLabel: "Upload",
+                // uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
+                // browseClass: "btn btn-primary btn-sm",
+            })
+            
+        }
 
-    $('#formulario-add')
-        .formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                'book[0].title': titleValidators,
-                'book[0].isbn': isbnValidators,
-                'book[0].price': priceValidators
-            }
-        })
-
-        // Add button click handler
-        .on('click', '.addButton', function() {
-            bookIndex++;
-            var $template = $('#bookTemplate'),
-                $clone    = $template
-                                .clone()
-                                .removeClass('hide')
-                                .removeAttr('id')
-                                .attr('data-book-index', bookIndex)
-                                .insertBefore($template);
-
-            // Update the name attributes
-            $clone
-                .find('[name="title"]').attr('name', 'book[' + bookIndex + '].title').end()
-                .find('[name="isbn"]').attr('name', 'book[' + bookIndex + '].isbn').end()
-                .find('[name="price"]').attr('name', 'book[' + bookIndex + '].price').end();
-
-            // Add new fields
-            // Note that we also pass the validator rules for new field as the third parameter
-            $('#bookForm')
-                .formValidation('addField', 'book[' + bookIndex + '].title', titleValidators)
-                .formValidation('addField', 'book[' + bookIndex + '].isbn', isbnValidators)
-                .formValidation('addField', 'book[' + bookIndex + '].price', priceValidators);
-        })
-
-        // Remove button click handler
-        .on('click', '.removeButton', function() {
-            var $row  = $(this).parents('.form-group'),
-                index = $row.attr('data-book-index');
-
-            // Remove fields
-            $('#bookForm')
-                .formValidation('removeField', $row.find('[name="book[' + index + '].title"]'))
-                .formValidation('removeField', $row.find('[name="book[' + index + '].isbn"]'))
-                .formValidation('removeField', $row.find('[name="book[' + index + '].price"]'));
-
-            // Remove element containing the fields
-            $row.remove();
+        $('#fotografia').on('fileclear', function(event) {
+            console.log("fileclear");
+            $('#fotografia').fileinput('destroy');
+            iniciarFileInput();
         });
-});
     </script>
 </body>
 </html>

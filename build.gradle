@@ -1,11 +1,7 @@
-
-apply plugin: 'java'
-apply plugin: 'war'
-
 buildscript {
     // configura la extenciones
     ext {
-        springBootVersion = '1.5.8.RELEASE'
+        springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -17,20 +13,20 @@ buildscript {
 }
 
 //plugin para java
-// apply plugin: 'java'
+apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'war'
-apply plugin: 'idea'
-// apply plugin: 'spring-boot' 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 
 
 
-bootRepackage {
-    mainClass = "controller"
-}
+//bootRepackage {
+    //mainClass = "controller"
+//}
+
+
 // springBoot {
 //   mainClass = "controller.inicio"
 // }
@@ -46,7 +42,6 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// In this section you declare where to find the dependencies of your project
 repositories {
     // jcenter()
     mavenCentral();
@@ -81,9 +76,10 @@ dependencies {
 	
     compile('org.springframework.boot:spring-boot-starter')
     // compile 'net.sourceforge.jtds:jtds:1.3.1'
+    
     // https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc
-    testCompile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '6.1.0.jre7'
-
+    //testCompile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '6.1.0.jre7'//CON ALGUNAS INCOMPARTIBILIDADES (no arranca en gradle)
+	compile 'com.microsoft.sqlserver:mssql-jdbc:6.5.4.jre8-preview'//DRIVER ACEPTADO CON GRADLE
     //para transacciones y jdbc
     compile("org.springframework.boot:spring-boot-starter-jdbc")
     compile 'javax:javaee-endorsed-api:7.0'
@@ -110,6 +106,8 @@ dependencies {
     
     // https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml
 	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.21'
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.7'
     
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mustache
