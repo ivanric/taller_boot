@@ -105,4 +105,19 @@ public class RestUsers {
 		} 
 		return new ResponseEntity<Map<String, Object>>(respuesta,HttpStatus.OK);
 	}
+	@RequestMapping(value="/changeStatus",method=RequestMethod.POST)
+	ResponseEntity<Map<String, Object>>statusUser(HttpServletRequest req,HttpServletResponse res){
+		System.out.println("STATUS USER:");
+		Map<String, Object> respuesta=new HashMap<String, Object>();
+		try {
+			if (iUsuarioService.changeStatus(req)) {
+				respuesta.put("estado",true);
+			} else {
+				respuesta.put("estado",false);
+			};
+		} catch (Exception e) {
+			respuesta.put("estado",false);
+		} 
+		return new ResponseEntity<Map<String, Object>>(respuesta,HttpStatus.OK);
+	}
 }

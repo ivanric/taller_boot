@@ -169,15 +169,15 @@
                     if(data.estado==1){
                         if(ExisteOpcion('eliminar')  ){
                             // if()
-                            $('td',row).eq(8).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" accesskey="'+data.idper+'" data-href="'+data.idper+'" onclick="(Gestion.elim(this))"><span class="zmdi zmdi-delete"></span> Eliminar</button>');
+                            $('td',row).eq(7).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" accesskey="'+data.idper+'" data-href="'+data.estado+'" onclick="(Gestion.elim(this))"><span class="zmdi zmdi-delete"></span> Eliminar</button>');
                         }else{
-                            $('td',row).eq(8).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-delete"></span> Eliminar</button>');  
+                            $('td',row).eq(7).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-delete"></span> Eliminar</button>');  
                         }
                     }else{
                         if(ExisteOpcion('habilitar')){
-                            $('td',row).eq(8).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" accesskey="'+data.idper+'" data-href="'+data.idper+'" onclick="(Gestion.hab(this))"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');
+                            $('td',row).eq(7).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" accesskey="'+data.idper+'" data-href="'+data.estado+'" onclick="(Gestion.hab(this))"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');
                         }else{
-                            $('td',row).eq(8).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');   
+                            $('td',row).eq(7).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');   
                         }                       
                     }
 
@@ -689,8 +689,9 @@
                 })    
             },
             elim:function(a){
-                var idben=$(a).attr('accesskey')
-                // alert('id: '+idben)
+                var idper=$(a).attr('accesskey')
+                var estado=$(a).data('href')
+                // alert('id: '+idper)
                 swal({   
                     title: "Seguro de Eliminar Usuario?",   
                     text: "Usted eliminará al Usuario",   
@@ -703,7 +704,7 @@
                     closeOnCancel: false 
                     }, function(isConfirm){
                     if (isConfirm) {
-                        $.post('/RestUsuario/eliminar',{idben:idben},function(resp){
+                        $.post('/RestUser/changeStatus',{idper:idper,estado:estado},function(resp){
                         	console.log(resp)
                             if (resp.estado) {
                                      $.ajax({
@@ -740,8 +741,9 @@
 
             },
             hab:function(a){
-                var idben=$(a).attr('accesskey')
-                                swal({   
+                var idper=$(a).attr('accesskey')
+                var estado=$(a).data('href')
+                swal({   
                     title: "Seguro de Habilitar Usuario?",   
                     text: "Usted habilitará al Usuario",   
                     type: "warning",   
@@ -753,7 +755,7 @@
                     closeOnCancel: false 
                     }, function(isConfirm){
                         if (isConfirm) {
-                            $.post('/RestUsuario/habilitar',{idben:idben},function(resp){
+                            $.post('/RestUser/changeStatus',{idper:idper,estado:estado},function(resp){
                                 console.log(resp)
                                 if (resp.estado) {
                                     $.ajax({

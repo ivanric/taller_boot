@@ -61,7 +61,7 @@ dependencies {
     // compile group: 'org.springframework.boot', name: 'spring-boot-legacy', version: '1.0.0.RELEASE'
     
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.8.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.2.RELEASE'
     
     // https://mvnrepository.com/artifact/org.springframework.session/spring-session-core
     // compile group: 'org.springframework.session', name: 'spring-session-core', version: '2.0.0.RC1'

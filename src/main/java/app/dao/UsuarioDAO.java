@@ -119,4 +119,30 @@ public class UsuarioDAO implements IUsuarioDAO {
 			return false;
 		}
 	}
+	@Override
+	public boolean changeStatus(HttpServletRequest req){
+		int idper=Integer.parseInt(req.getParameter("idper"));
+		int estado=Integer.parseInt(req.getParameter("estado"));
+		String sql="";
+		int resp=0;
+		try{
+			if (estado==1) {
+				sql="UPDATE persona SET estado=0 WHERE idper=?";	
+				resp=this.db.update(sql,idper);
+			}else{
+				sql="UPDATE persona SET estado=1 WHERE idper=?";	
+				resp=this.db.update(sql,idper);
+			}
+
+			if (resp==1) {
+				return true;
+			}else{
+				return false;
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

@@ -49,4 +49,10 @@ public class UsuarioService implements IUsuarioService {
 		return status;
 	}
 
+	@Override
+	public boolean changeStatus(HttpServletRequest req) {
+		boolean status=usuarioDAO.changeStatus(req);
+		return status;
+	}
+
 }

@@ -13,5 +13,6 @@ public interface IUsuarioService {
 	public boolean save(HttpServletRequest req,String tel[],String nombreFoto);
 	public boolean modify(HttpServletRequest req,String tel[],String nombreFoto);
 	public Persona getPersonaById(int idper);
+	public boolean changeStatus(HttpServletRequest req);
 	public int generarIdPer();
 }
