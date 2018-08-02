@@ -38,7 +38,7 @@ public class RestAprobaciones {
 	
 	@RequestMapping(value="listar")
 	public ResponseEntity<List<Solicitud>> listarBneneficiarios(HttpServletRequest req,HttpServletResponse res){
-		String filtro=req.getParameter("filtro");
+//		String filtro=req.getParameter("filtro");
 //		System.out.println("filtro: "+filtro);
 		List<Solicitud> solicitudes=new ArrayList<Solicitud>();
 		solicitudes=this.manejadorSolicitudes.ListarSolAp(req);

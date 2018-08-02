@@ -39,6 +39,8 @@ public class Security extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.httpBasic();
 //		.formLogin();
+		http.headers().frameOptions().sameOrigin();//DESACTIVA EL ENCABEZADO  sameOrigin y  permitir X-Frame-Options
 	}
+	
 
 }

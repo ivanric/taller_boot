@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -125,8 +124,8 @@ public class RestBeneficiarios {
 	@RequestMapping(value="eliminar")
 	public ResponseEntity<Map<String, Object>> elim(HttpServletRequest req){
 		System.out.println("lego eliminar");
-		HttpSession sesion=req.getSession(true);
-		Persona xuser=(Persona) sesion.getAttribute("xusuario");
+//		HttpSession sesion=req.getSession(true);
+//		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		String idben=req.getParameter("idben");
 		System.out.println("idben_servidor: "+idben);
 		Map<String, Object> respuesta=new HashMap<String, Object>();
@@ -142,8 +141,8 @@ public class RestBeneficiarios {
 	@RequestMapping(value="habilitar")
 	public ResponseEntity<Map<String, Object>> habil(HttpServletRequest req){
 		System.out.println("lego eliminar");
-		HttpSession sesion=req.getSession(true);
-		Persona xuser=(Persona) sesion.getAttribute("xusuario");
+//		HttpSession sesion=req.getSession(true);
+//		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		String idben=req.getParameter("idben");
 		System.out.println("idben_servidor: "+idben);
 		Map<String, Object> respuesta=new HashMap<String, Object>();

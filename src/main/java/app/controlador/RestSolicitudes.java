@@ -1,10 +1,14 @@
 package app.controlador;
 
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,11 +19,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.pdf.codec.Base64.OutputStream;
+
 import app.manager.ManejadorBeneficiarios;
+import app.manager.ManejadorServicios;
 import app.manager.ManejadorSolicitudes;
 import app.models.CombustibleVehiculo;
 import app.models.Documento;
@@ -29,6 +38,12 @@ import app.models.Solicitud;
 import app.models.Telefono;
 import app.models.Vehiculo;
 import app.utilidades.GeneradorReportes;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @RequestMapping("/RestSolicitudes/")
 @RestController 
@@ -37,6 +52,8 @@ public class RestSolicitudes {
 	ManejadorSolicitudes manejadorSolicitudes;
 	@Autowired
 	ManejadorBeneficiarios manejadorBeneficiarios;
+	@Autowired
+	ManejadorServicios manejadorServicios;
 	 
 	@RequestMapping(value="listar")
 	public ResponseEntity<List<Solicitud>> listarBneneficiarios(HttpServletRequest req,HttpServletResponse res){	
@@ -186,14 +203,19 @@ public class RestSolicitudes {
 	}
 	@Autowired
 	DataSource dataSource;
-	@RequestMapping("Imprimir")
-	public  void Imprimir(HttpServletResponse res,HttpServletRequest req){
+	@RequestMapping(value="Imprimir/{id}",method=RequestMethod.GET)
+	public  void Imprimir(HttpServletResponse res,HttpServletRequest req,@PathVariable("id") Integer id){
 		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 		String ListaTelefonos="",Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
-		String idsolt=req.getParameter("idsolt");
+		int idsolt=id;
 		System.out.println("idsoltIMPRIMIR: "+idsolt);
-		  
-		List<Telefono> ListaTelf=this.manejadorSolicitudes.ListaTelf(Integer.parseInt(idsolt));
+		
+		Map<String, Object> nitSQL=this.manejadorServicios.nitEmpresa(1); 
+	
+		String nit_patam=(String) nitSQL.get("nitInst");
+		System.out.println("nit_param: "+nit_patam);
+		
+		List<Telefono> ListaTelf=this.manejadorSolicitudes.ListaTelf(idsolt);
 		System.out.println("ListaTelefonos: "+ListaTelf.toString());
 		
 		for (int i = 0; i < ListaTelf.size(); i++) {
@@ -212,15 +234,16 @@ public class RestSolicitudes {
 		        
 		String direccionBol="/app/reportes/escudobolivia.png";
 		String subReportInst="/app/reportes/getEmpresa.jasper";
-		          
+		             
 		String nombreReporte="Solicitud",tipo="pdf", estado="inline";
 		System.out.println("escudo: "+this.getClass().getResourceAsStream(direccionBol));
-		    
+		     
 		Map<String, Object> parametros=new HashMap<String, Object>();
 		                      
 		String url="/app/reportes/solicitud.jasper"; 	
 	                                
-		parametros.put("idsolt_param",Integer.parseInt(idsolt));
+		parametros.put("nit_param",nit_patam);
+		parametros.put("idsolt_param",idsolt);
 		parametros.put("telefonos_param",ListaTelefonos);
 		parametros.put("tramitador_param",Tramitador);
 //		parametros.put("realPath",realPath);
@@ -228,14 +251,27 @@ public class RestSolicitudes {
  
 		parametros.put("input_param",this.getClass().getResourceAsStream(direccionBol));
 		parametros.put("subreport_inst_param",this.getClass().getResourceAsStream(subReportInst));
-//		parametros.put("usuario", us.getNombre()+" "+us.getAp()+" "+us.getAm());
-	
+
 		GeneradorReportes g=new GeneradorReportes();
 		try{
+			
 			g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	
+		  
+//			InputStream jasperStream = this.getClass().getResourceAsStream(url);
+//
+//		    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+//		    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource.getConnection());
+//
+//		    res.setContentType("application/pdf");
+//		    res.setHeader("Content-disposition", "inline; filename=helloWorldReport.pdf");
+//
+//		    final ServletOutputStream outStream = res.getOutputStream();
+//		    JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 	}
+	
 	
 }

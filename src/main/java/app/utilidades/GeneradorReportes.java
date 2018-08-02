@@ -27,6 +27,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class GeneradorReportes {
 
 	public  void generarReporte(HttpServletResponse response, URL reportPath,String format,Map<?, ?> parameters,Connection connection,String NameReport,String OnOffLine) throws JRException, SQLException, IOException{
+
 		
 		byte[] fichero = generarReporte2(reportPath, format, parameters, connection);
 		
@@ -48,8 +49,7 @@ public class GeneradorReportes {
 				
 				extension=".xls";
 	    	
-			}else 
-				if (format.equalsIgnoreCase("rtf")){
+			}else if (format.equalsIgnoreCase("rtf")){
 	    		
 					mime = "text/rtf";
 	    		
@@ -57,24 +57,23 @@ public class GeneradorReportes {
 					
 					extension=".rtf";
 	    	
-				}else 
-					
-					if (format.equalsIgnoreCase("html")){
+			}else 	if (format.equalsIgnoreCase("html")){
 	    	
 						mime = "text/html";
 						
-						extension=".html";
+		 				extension=".html";
 	    	
 					}
 	    	
 			response.setContentType(mime);
 			
 			response.setHeader("Content-disposition", OnOffLine+"; filename="+NameReport+extension);
+			//response.setHeader("Content-Length", OnOffLine+"; filename="+NameReport+extension);
 	    	
 			response.setContentLength(fichero.length);
-            
+             
 			out = response.getOutputStream();
-            
+             
 			out.write(fichero, 0, fichero.length);
         
 		} catch (Exception e) {
@@ -83,8 +82,8 @@ public class GeneradorReportes {
         
 		} finally {
         
-			//connection.close();
-            
+//			connection.close();
+            connection.close();
 			out.flush();
             
 			out.close();
@@ -101,8 +100,14 @@ public class GeneradorReportes {
 	 * @return
 	 * @throws JRException
 	 * @throws SQLException
+	 * @throws IOException 
 	 */
-	public  byte[] generarReporte2(URL reportPath,String format,Map<?, ?> parameters,Connection connection) throws JRException, SQLException{
+	public  byte[] generarReporte2(URL reportPath,String format,Map<?, ?> parameters,Connection connection) throws JRException, SQLException, IOException{
+		
+//		int numberOfBytesToRead = 200;
+//		byte[] buffer = new byte[numberOfBytesToRead];
+//		reportPath.openStream().read(buffer);
+		
 		JasperReport report2 = (JasperReport)JRLoader.loadObject(reportPath);
 		
 		@SuppressWarnings("unchecked")

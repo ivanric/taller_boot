@@ -1,6 +1,5 @@
 package app.controlador;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import app.models.Documento;
 import app.models.Persona;
 
 @RequestMapping({"/Usuarios/"})
@@ -54,7 +52,6 @@ public class ControladorUsuarios {
 	}
 	@RequestMapping({"modal-mod"})
 	public String modal_mod(HttpServletRequest request,Model m){
-		List<Documento> listaDocumentos;
 		HttpSession sesion=request.getSession(true);
 		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		try {
