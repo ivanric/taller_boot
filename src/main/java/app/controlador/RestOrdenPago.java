@@ -30,6 +30,7 @@ import app.models.OrdenServicio;
 import app.models.Persona;
 import app.models.Solicitud;
 import app.utilidades.GeneradorReportes;
+import app.utilidades.URIS;
 
 
 @RequestMapping("/RestOrdenPago/")
@@ -138,19 +139,20 @@ public class RestOrdenPago {
 	DataSource dataSource;
 	@RequestMapping("Imprimir")
 	public  void Imprimir(HttpServletResponse res,HttpServletRequest req){
+		URIS uris=new URIS();
 		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
 		String id=req.getParameter("idOrdPago");
 		System.out.println("idOrdPago: "+id);
 		//int idRegistroKit=this.manejadorActaRecepcion.getIdRegistroKit(Integer.parseInt(id));  
 		//System.out.println("idRegistroKitReport: "+idRegistroKit);
-		String escudo="/app/reportes/escudobolivia.png";        
+		String escudo=uris.imgJasperReport+"escudobolivia.png";        
 		String nombreReporte="ORDEN DE PAGO",tipo="pdf", estado="inline";
-		System.out.println("escudo: "+this.getClass().getResourceAsStream(escudo));
+//		System.out.println("escudo: "+this.getClass().getResourceAsStream(escudo));
 		      
 		Map<String, Object> parametros=new HashMap<String, Object>();
 		                        
-		String url="/app/reportes/getOrdenPago.jasper"; 	
+		String url=uris.jasperReport+"getOrdenPago.jasper"; 	
 	                                
 		parametros.put("idOrdPago_param",Integer.parseInt(id));
 		//parametros.put("idRegistroKit_param",idRegistroKit);

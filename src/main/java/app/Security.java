@@ -33,12 +33,11 @@ public class Security extends WebSecurityConfigurerAdapter {
 		*/
 		.csrf().disable()
 		.authorizeRequests()
-//		.antMatchers("/principal/index").permitAll()
-		.antMatchers("/**").permitAll();
+		.antMatchers("/principal/index").permitAll();
 //		.antMatchers("/**").hasRole("USER")
 //		.and()
-//		.httpBasic();
-//		.formLogin();
+//		.httpBasic()
+//		.and().formLogin().loginPage("/principal/index");
 		http.headers().frameOptions().sameOrigin();//DESACTIVA EL ENCABEZADO  sameOrigin y  permitir X-Frame-Options
 	}
 	

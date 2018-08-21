@@ -25,6 +25,7 @@ import app.models.Persona;
 import app.models.Solicitud;
 import app.models.TipoAprobador;
 import app.utilidades.GeneradorReportes;
+import app.utilidades.URIS;
 
 @RequestMapping("/RestAprobaciones/")
 @RestController 
@@ -138,6 +139,7 @@ public class RestAprobaciones {
 	DataSource dataSource;
 	@RequestMapping("Imprimir")
 	public  void Imprimir(HttpServletResponse res,HttpServletRequest req){
+		URIS uris=new URIS();
 		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
 		String idsolt=req.getParameter("idsolt");
@@ -145,7 +147,7 @@ public class RestAprobaciones {
 		Map<String, Object> nitSQL=this.manejadorServicios.nitEmpresa(1); 
 //		System.out.println("nitSQL: "+nitSQL);
 		String nit_patam=(String) nitSQL.get("nitInst"); 
-		String direccionBol="/app/reportes/escudobolivia.png";
+		String direccionBol=uris.imgJasperReport+"escudobolivia.png";
 		String nombreReporte="Aprobación",tipo="pdf", estado="inline";
 		    
 		String [] ListaAprobaciones=req.getParameterValues("aprobacion[]");
@@ -157,7 +159,7 @@ public class RestAprobaciones {
 
 		try{
 			if(ListaAprobaciones!=null){
-				url="/app/reportes/getAprobacion.jasper";
+				url=uris.jasperReport+"getAprobacion.jasper";
 				for (String string : ListaAprobaciones) {
 					System.out.println("AprobImprimir: "+string);
 				}
@@ -177,7 +179,7 @@ public class RestAprobaciones {
 				parametros.put("miArray", arrayID);   
 				g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	
 			}else{
-				url="/app/reportes/blanco.jasper";
+				url=uris.jasperReport+"blanco.jasper";
 				g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	
 				System.out.println("Sin aprobaciones" ); 
 			}   

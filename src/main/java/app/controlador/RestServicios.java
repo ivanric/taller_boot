@@ -29,6 +29,7 @@ import app.models.Servicio;
 import app.models.Solicitud;
 import app.models.Telefono;
 import app.utilidades.GeneradorReportes;
+import app.utilidades.URIS;
  
 @RequestMapping("/RestServicios/")
 @RestController
@@ -235,41 +236,42 @@ public class RestServicios {
 	DataSource dataSource;
 	@RequestMapping("ImprimirOS")
 	public  void verOS(HttpServletResponse res,HttpServletRequest req){
-		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
-		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
+		URIS uris=new URIS();
+//		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
+//		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
 		String idOrdServ=req.getParameter("idOrdServ");
 		String ListaTelefonosTaller="",ListaTelefonosBeneficiario="";
 		
 		List<Telefono> ListaTelfTall=this.manejadorServicios.ListaTelfTall(Integer.parseInt(idOrdServ));
-		System.out.println("ListaTelefonosTall: "+ListaTelfTall.toString());
+//		System.out.println("ListaTelefonosTall: "+ListaTelfTall.toString());
 		
 		for (int i = 0; i < ListaTelfTall.size(); i++) {
-			System.out.println("ListaTelTall: "+ListaTelfTall.get(i));
+//			System.out.println("ListaTelTall: "+ListaTelfTall.get(i));
 			ListaTelefonosTaller+=ListaTelfTall.get(i).getNumero()+" ";
 		}
 		ListaTelefonosTaller=ListaTelefonosTaller.trim().replaceAll(" ","-");
-		System.out.println("ListaTelefonosTall: "+ListaTelefonosTaller);
+//		System.out.println("ListaTelefonosTall: "+ListaTelefonosTaller);
 		
 		
 		List<Telefono> ListaTelfBen=this.manejadorServicios.ListaTelfBen(Integer.parseInt(idOrdServ));
-		System.out.println("ListaTelefonosTall: "+ListaTelfBen.toString());
+//		System.out.println("ListaTelefonosTall: "+ListaTelfBen.toString());
 		
 		for (int i = 0; i < ListaTelfBen.size(); i++) {
-			System.out.println("ListaTelBen: "+ListaTelfBen.get(i));
+//			System.out.println("ListaTelBen: "+ListaTelfBen.get(i));
 			ListaTelefonosBeneficiario+=ListaTelfBen.get(i).getNumero()+" ";
 		}
 		ListaTelefonosBeneficiario=ListaTelefonosBeneficiario.trim().replaceAll(" ","-");
-		System.out.println("ListaTelefonosBen: "+ListaTelefonosBeneficiario);
+//		System.out.println("ListaTelefonosBen: "+ListaTelefonosBeneficiario);
 		
 		
-		System.out.println("idOrdServ: "+idOrdServ);
+//		System.out.println("idOrdServ: "+idOrdServ);
 		
 		Map<String, Object> nitSQL=this.manejadorServicios.nitEmpresa(1); 
-		System.out.println("nitSQL: "+nitSQL);
+//		System.out.println("nitSQL: "+nitSQL);
 		String nit_patam=(String) nitSQL.get("nitInst");
 		System.out.println("nit_param: "+nit_patam);
-		String direccionBol="/app/reportes/escudobolivia.png";
-		String logoGob="/app/reportes/escudoGobernacion.png"; 
+		String direccionBol=uris.imgJasperReport+"escudobolivia.png";
+		String logoGob=uris.imgJasperReport+"escudoGobernacion.png"; 
 //		String subReportInst="/app/reportes/getEmpresa.jasper"; 
                             
 		String nombreReporte="Solicitud",tipo="pdf", estado="inline";
@@ -277,7 +279,7 @@ public class RestServicios {
 		    
 		Map<String, Object> parametros=new HashMap<String, Object>();
 		                       
-		String url="/app/reportes/getOrdenServicio.jasper";	
+		String url=uris.jasperReport+"getOrdenServicio.jasper";	
 	            
 		parametros.put("idOrdServ_param",Integer.parseInt(idOrdServ));
 		parametros.put("telefonosTall_param",ListaTelefonosTaller);

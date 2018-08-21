@@ -21,7 +21,7 @@ $(function(){
 	//quiero acceder a los elementos li que tengan ul una lista
 
 
-	$('body').on('click','.menu li:has(ul)',function(e){
+	$('body').on('click','.lista-menu li:has(ul)',function(e){
 		e.preventDefault();
 		//preguntat si este elemento tiene la clase activado
 		if($(this).hasClass('activado')){

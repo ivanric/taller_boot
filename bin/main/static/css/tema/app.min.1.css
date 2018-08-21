@@ -6,21 +6,6 @@
 
 
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-menu,
-nav,
-section,
-summary {
-  display: block;
-}
 
 audio,
 canvas,
@@ -8994,7 +8979,7 @@ a.waves-effect .waves-ripple {
 }
 
 .m-b-20 {
-  margin-bottom: 20px !important;
+  margin-bottom: 5px !important;
 }
 
 .m-l-20 {

@@ -1,24 +1,17 @@
-*{
-	font-family: sans-serif;
-	font-size: 12px;
-}
+
 fieldset{
 	padding-top: 18px;
 }
-html{
-	
+legend{
+    font-size: 14px;
 }
-selectt{
-	-webkit-appearance: menulist !important;
+select option{
+    font-size: 10px !important;
+
 }
+
 .espacio-form{
 	padding-top: 5px;
-}
-.baner{
-
-/* 	background: #e2e2e2 url("../img/bannerGNV.png") no-repeat top center; */
-	padding-top: 13em;
-/* 	background-image: "../img/banner.png"  */
 }
 .btn-espacio{
 	margin-right: 3px;
@@ -42,9 +35,15 @@ selectt{
 /*     background: url(chosen-sprite.png) no-repeat 0 2px; */
 }
 .chosen-container-single .chosen-single {
-	font-size:12px;
     height: 2.0rem !important;
     line-height: 1.7rem !important;
+	font-size:12px;
+}
+.chosen-container .chosen-results {
+	font-size:12px;
+}
+.input-group-addon{
+    border: none !important;
 }
 .check_NoStyle{
     opacity: 1;
@@ -55,12 +54,7 @@ selectt{
     border-radius: none;
     margin-top: 12px;
 }
-/* .chosen-container-single .chosen-single div b { */
-/*     display: none !important; */
-/*     width: 100%; */
-/*     height: 100%; */
-/*     background: url(chosen-sprite.png) no-repeat 0 2px; */
-/* } */
+
 .dropdown-menu.user > li > .triangle {
     margin-top: -19px !important;
     position: absolute;
@@ -73,19 +67,8 @@ selectt{
 .time{
 	display: inline;
 }
-.pie_pag {
-    background: #000000;
-	/*background: radial-gradient(ellipse at center, rgba(48, 80, 88, 0.55) 0%, rgba(26, 3, 103, 0.73) 70%); */
-    background:#000f51;
-    background-size: 100%;
-    bottom: 0;
-    /* border-radius: 12px; */
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 2.5em;
-    z-index: 1;
-}
+
+
 .mcss_input{
 	height: 16px !important;
 }
@@ -118,26 +101,9 @@ selectt{
   height: 2.2em;
 }
 
-.main-menu {
-    list-style: none;
-    padding-left: 0;
-    margin: 0 !important;
-}
+
 .my-card-padding{
 	padding-bottom: 1.5em !important;
-}
-.navbar {
-    border-radius: 0px !important;
-}
-.navbar {
-    position: relative;
-    min-height: 31px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
 }
 .navbar-collapse {
     overflow-x: visible;
@@ -172,9 +138,6 @@ selectt{
 .selected{
 	background-color: #B0BED9;
 }
-.sub-proceso{
-	background:rgba(128, 128, 128, 0.06);
-}
 @media (min-width: 768px) {
   .sidebar {
     z-index: 1;
@@ -196,15 +159,6 @@ selectt{
     margin: -22px 30px 0 0 !important;
 	}
 }
-/* @media (min-width: 768px) { */
-/*   #page-wrapper { */
-/*     position: inherit; */
-/*     margin: 5px 0px 0 250px; */
-/*     padding: 2px 10px !important; */
-/*     border-left: 1px solid #e7e7e7; */
-/*   } */
-	
-/* } */
 
 @media (min-width: 768px) {
   #page-wrapper {

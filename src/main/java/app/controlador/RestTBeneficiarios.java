@@ -28,6 +28,7 @@ import app.models.RegistroKit;
 import app.models.Telefono;
 import app.models.TransferenciaBeneficiario;
 import app.utilidades.GeneradorReportes;
+import app.utilidades.URIS;
 
 @RequestMapping("/RestTBeneficiarios/")
 @RestController
@@ -60,8 +61,8 @@ public class RestTBeneficiarios {
 	}
 	@RequestMapping(value="FiltroInstalacionKit")
 	public ResponseEntity<List<RegistroKit>> FiltroSolicitud(HttpServletRequest req,HttpServletResponse res){
-		HttpSession sesion=req.getSession(true);
-		Persona xuser=(Persona) sesion.getAttribute("xusuario");
+//		HttpSession sesion=req.getSession(true);
+//		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		String texto=req.getParameter("texto");
 		System.out.println("texto: "+texto);
 		 
@@ -112,7 +113,7 @@ public class RestTBeneficiarios {
 	
 	@RequestMapping(value="Ver")
 	public ResponseEntity<List<?>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
-		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
+//		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 		List<Object> lista=new ArrayList<>();
 		String idtrasl=req.getParameter("idtrasl");
 		System.out.println("idtrasl: "+idtrasl);
@@ -130,10 +131,11 @@ public class RestTBeneficiarios {
 	DataSource dataSource;
 	@RequestMapping("Imprimir")
 	public  void Imprimir(HttpServletResponse res,HttpServletRequest req){
+		URIS uris=new URIS();
 		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();    
 		String id=req.getParameter("idtrasl");
-		System.out.println("idTrasl: "+id);
+//		System.out.println("idTrasl: "+id);
 		
 		TransferenciaBeneficiario tb=this.manejadorBeneficiarios.verTBeneficiario(Integer.parseInt(id));
 		RegistroKit rk=this.manejadorInstalacionKit.getRegistroKitTBbyIdTrasl(Integer.parseInt(id));
@@ -147,33 +149,33 @@ public class RestTBeneficiarios {
 		String ListaTelefonosAB="",ListaTelefonosNB="";
 		
 		List<Telefono> ListaTelfAB=this.manejadorBeneficiarios.ListaTelf_TB(tb.getPersonaAnteriorBenf().getIdper());
-		System.out.println("ListaTelfAB: "+ListaTelfAB.toString());
+//		System.out.println("ListaTelfAB: "+ListaTelfAB.toString());
 		for (int i = 0; i < ListaTelfAB.size(); i++) {
-			System.out.println("ListaTelfAB: "+ListaTelfAB.get(i));
+//			System.out.println("ListaTelfAB: "+ListaTelfAB.get(i));
 			ListaTelefonosAB+=ListaTelfAB.get(i).getNumero()+" ";
 		}
 		ListaTelefonosAB=ListaTelefonosAB.trim().replaceAll(" ","-");
-		System.out.println("ListaTelefonosAB: "+ListaTelefonosAB);
+//		System.out.println("ListaTelefonosAB: "+ListaTelefonosAB);
 		 
 		
 		
 		List<Telefono> ListaTelfNB=this.manejadorBeneficiarios.ListaTelf_TB(tb.getPersonaNuevoBenf().getIdper());
-		System.out.println("ListaTelfNB: "+ListaTelfNB.toString());
+//		System.out.println("ListaTelfNB: "+ListaTelfNB.toString());
 		for (int i = 0; i < ListaTelfNB.size(); i++) {
-			System.out.println("ListaTelfNB: "+ListaTelfNB.get(i));
+//			System.out.println("ListaTelfNB: "+ListaTelfNB.get(i));
 			ListaTelefonosNB+=ListaTelfNB.get(i).getNumero()+" ";
 		}
 		ListaTelefonosNB=ListaTelefonosNB.trim().replaceAll(" ","-");
-		System.out.println("ListaTelefonosNB: "+ListaTelefonosNB);
+//		System.out.println("ListaTelefonosNB: "+ListaTelefonosNB);
 	 	 
 	
 		  
-		String escudo="/app/reportes/escudobolivia.png";        
+		String escudo=uris.imgJasperReport+"escudobolivia.png";        
 		String nombreReporte="TRANSFERENCIA BENEFICIARIO",tipo="pdf", estado="inline";
-		System.out.println("escudo: "+this.getClass().getResourceAsStream(escudo));
+//		System.out.println("escudo: "+this.getClass().getResourceAsStream(escudo));
 		      
 		Map<String, Object> parametros=new HashMap<String, Object>();         
-		String url="/app/reportes/getTBeneficiario.jasper"; 	
+		String url=uris.jasperReport+"getTBeneficiario.jasper"; 	
 	                                
 		parametros.put("idTrasl_param",Integer.parseInt(id));
 		parametros.put("telefonosAB_param",ListaTelefonosAB);

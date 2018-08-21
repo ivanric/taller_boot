@@ -28,6 +28,7 @@ import app.models.OrdenServicio;
 import app.models.Persona;
 import app.models.Solicitud;
 import app.utilidades.GeneradorReportes;
+import app.utilidades.URIS;
 
 
 @RequestMapping("/RestActaRecepcion/")
@@ -129,16 +130,17 @@ public class RestActaRecepcion {
 	public  void Imprimir(HttpServletResponse res,HttpServletRequest req){
 //		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 //		String Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
+		URIS uris=new URIS(); 
 		String id=req.getParameter("idRecep");
 		System.out.println("idRecep: "+id);
 		  
-		String escudo="/app/reportes/escudoGobernacion.png";        
+		String escudo=uris.imgJasperReport+"escudoGobernacion.png";        
 		String nombreReporte="Acta de Recepcion",tipo="pdf", estado="inline";
 		System.out.println("escudo: "+this.getClass().getResourceAsStream(escudo));
 		      
 		Map<String, Object> parametros=new HashMap<String, Object>();
 		                       
-		String url="/app/reportes/actaRecepcion.jasper"; 	
+		String url=uris.jasperReport+"actaRecepcion.jasper"; 	
 	                                
 		parametros.put("idRecep_param",Integer.parseInt(id));
 //		parametros.put("tramitador_param",Tramitador);

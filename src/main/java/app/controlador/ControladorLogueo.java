@@ -19,13 +19,10 @@ public class ControladorLogueo {
 	public String home(Model model) {
 		System.out.println("INICIA");
 //		model.addAttribute("Hello", "Hola Mundo Velocity");
-		return "index";
+		return "login";
 	}
 	
-	@RequestMapping(value = "/index2")
-	public String home2(Model model) {
-		return "demo";
-	}	
+	
 	@RequestMapping(value = "/inicio")
 	public String inicio(HttpServletRequest request, Model model) {
 		
@@ -41,7 +38,7 @@ public class ControladorLogueo {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "principal/principal";
+		return "inicio";
 	
 	}
 	

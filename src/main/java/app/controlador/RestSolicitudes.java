@@ -1,14 +1,10 @@
 package app.controlador;
 
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itextpdf.text.pdf.codec.Base64.OutputStream;
 
 import app.manager.ManejadorBeneficiarios;
 import app.manager.ManejadorServicios;
@@ -38,12 +33,8 @@ import app.models.Solicitud;
 import app.models.Telefono;
 import app.models.Vehiculo;
 import app.utilidades.GeneradorReportes;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
+import app.utilidades.URIS;
+
 
 @RequestMapping("/RestSolicitudes/")
 @RestController 
@@ -135,8 +126,6 @@ public class RestSolicitudes {
 	@Transactional
 	@RequestMapping(value="anular")
 	public Map<String, Object> anular(HttpServletRequest req,HttpServletResponse res){
-		HttpSession sesion=req.getSession(true);
-		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		String idsolt=req.getParameter("idsolt");
 		System.out.println("idSolt_servidor"+idsolt);
 		Map<String, Object> respuesta=new HashMap<String, Object>();
@@ -156,8 +145,6 @@ public class RestSolicitudes {
 
 	@RequestMapping(value="FiltroSolicitudOS")
 	public ResponseEntity<List<Solicitud>> FiltroSolicitud(HttpServletRequest req,HttpServletResponse res){
-		HttpSession sesion=req.getSession(true);
-		Persona xuser=(Persona) sesion.getAttribute("xusuario");
 		String texto=req.getParameter("texto");
 		System.out.println("texto: "+texto);
 		 
@@ -173,11 +160,10 @@ public class RestSolicitudes {
 	}
 	@RequestMapping(value="Ver")
 //	public ResponseEntity<List<List<?>>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
-		public ResponseEntity<List<?>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
-		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
+	public ResponseEntity<List<?>> VerSolicitud(HttpServletRequest req,HttpServletResponse res){
 //		List<List<?>> lista=new ArrayList<List<?>>();
 		List<Object> lista=new ArrayList<>();
-		String ListaTelefonos="",Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
+		String ListaTelefonos="";
 		String idsolt=req.getParameter("idsolt");
 		System.out.println("idsolt: "+idsolt);
 		  
@@ -205,50 +191,42 @@ public class RestSolicitudes {
 	DataSource dataSource;
 	@RequestMapping(value="Imprimir/{id}",method=RequestMethod.GET)
 	public  void Imprimir(HttpServletResponse res,HttpServletRequest req,@PathVariable("id") Integer id){
+		URIS uris=new URIS();
 		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
 		String ListaTelefonos="",Tramitador=us.getAp().toUpperCase()+" "+us.getAm().toUpperCase()+" "+us.getNombres().toUpperCase();
 		int idsolt=id;
 		System.out.println("idsoltIMPRIMIR: "+idsolt);
+		String nombreReporte="Solicitud",tipo="pdf", estado="inline";
 		
 		Map<String, Object> nitSQL=this.manejadorServicios.nitEmpresa(1); 
-	
 		String nit_patam=(String) nitSQL.get("nitInst");
-		System.out.println("nit_param: "+nit_patam);
+//		System.out.println("nit_param: "+nit_patam);
 		
 		List<Telefono> ListaTelf=this.manejadorSolicitudes.ListaTelf(idsolt);
-		System.out.println("ListaTelefonos: "+ListaTelf.toString());
+//		System.out.println("ListaTelefonos: "+ListaTelf.toString());
 		
 		for (int i = 0; i < ListaTelf.size(); i++) {
 			System.out.println("ListaTelS: "+ListaTelf.get(i));
 			ListaTelefonos+=ListaTelf.get(i).getNumero()+" ";
 		}
 		ListaTelefonos=ListaTelefonos.trim().replaceAll(" ","-");
+	
+		String direccionBol=uris.imgJasperReport+"escudobolivia.png";
+		System.out.println("Dire: "+direccionBol);             
 		
-		System.out.println("ListaTelefonos: "+ListaTelefonos);
-		
-//		String ca=FacesContextUtils
-//		String realPath=req.getServletContext().getRealPath("/imgReportes/");
-//		System.out.println("direccionFoto: "+ realPath);  
-//		String fotoEscudo=realPath+"escudobolivia.png";
-//		System.out.println("nombreFoto: "+ fotoEscudo); 
-		        
-		String direccionBol="/app/reportes/escudobolivia.png";
-		String subReportInst="/app/reportes/getEmpresa.jasper";
-		             
-		String nombreReporte="Solicitud",tipo="pdf", estado="inline";
 		System.out.println("escudo: "+this.getClass().getResourceAsStream(direccionBol));
-		     
+		String subReportInst=uris.jasperReport+"getEmpresa.jasper";
+		
+		System.out.println("subReport: "+subReportInst);
 		Map<String, Object> parametros=new HashMap<String, Object>();
-		                      
-		String url="/app/reportes/solicitud.jasper"; 	
+		                      	
+		String url=uris.jasperReport+"solicitud.jasper"; 	
 	                                
 		parametros.put("nit_param",nit_patam);
 		parametros.put("idsolt_param",idsolt);
 		parametros.put("telefonos_param",ListaTelefonos);
 		parametros.put("tramitador_param",Tramitador);
-//		parametros.put("realPath",realPath);
-//		System.out.println("DireccionLoc: "+this.getClass().getRe(direccionBol));
- 
+
 		parametros.put("input_param",this.getClass().getResourceAsStream(direccionBol));
 		parametros.put("subreport_inst_param",this.getClass().getResourceAsStream(subReportInst));
 

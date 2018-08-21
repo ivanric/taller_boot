@@ -255,6 +255,12 @@ header nav a .btn-menu{
 
 
 
+.main-menu {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 !important;
+}
+
 /*MENU*/
 
 .div-menu{	
@@ -447,7 +453,21 @@ header nav a .btn-menu{
 	{
 		line-height: 50px;
 	}
-	
+
+
+	.pie_pag {
+		background: #000000;
+		/*background: radial-gradient(ellipse at center, rgba(48, 80, 88, 0.55) 0%, rgba(26, 3, 103, 0.73) 70%); */
+		background:#000f51;
+		background-size: 100%;
+		bottom: 0;
+		/* border-radius: 12px; */
+		position: fixed;
+		left: 0;
+		width: 100%;
+		height: 2.5em;
+		z-index: 1;
+	}
 	.logout-div{
 		right:2em;
 		top:12em;
